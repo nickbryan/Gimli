@@ -25,7 +25,7 @@ func TestNewPopulatedRepository(t *testing.T) {
 	r := NewPopulatedRepository(testMap)
 
 	assert.IsType(t, new(Repository), r)
-	assert.Equal(t, &Repository{testMap}, r)
+	assert.Equal(t, &Repository{items: testMap}, r)
 }
 
 var repo = NewPopulatedRepository(testMap)
