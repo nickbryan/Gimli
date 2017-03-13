@@ -88,11 +88,9 @@ func TestMustResolvePanicsWhenNotBound(t *testing.T) {
 func TestBindAddsResolverToContainer(t *testing.T) {
 	c := NewContainer()
 
-	resolver := func(container Container) interface{} {
+	resolver := Resolver(func(container Container) interface{} {
 		return 42
-	}
-
-	// TODO: assert function is of type Resolver
+	})
 
 	c.Bind("TheMeaningOfLife", resolver)
 	assert.True(t, c.Has("TheMeaningOfLife"))
