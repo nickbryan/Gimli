@@ -1,26 +1,38 @@
 package routing
 
-import (
-	"net/http"
-	"net/url"
-)
+import "strings"
 
-type RouteClosure func(request *http.Request, response http.ResponseWriter, params url.Values)
-
-// RequestMethod type is used to identify the supported request methods
-type RequestMethod string
-
-// Constants representing supported request methods
-const (
-	GET    RequestMethod = "GET"
-	POST   RequestMethod = "POST"
-	PUT    RequestMethod = "PUT"
-	DELETE RequestMethod = "DELETE"
-)
-
-// Route represents a single application route
 type Route struct {
-	Method  RequestMethod
-	Pattern string
-	Handler interface{}
+	path    string
+	methods []string
+}
+
+func NewRoute(path string, methods []string) *Route {
+	r := &Route{}
+
+	r.SetPath(path)
+	r.SetMethods(methods...)
+
+	return r
+}
+
+func (r *Route) Path() string {
+	return r.path
+}
+
+func (r *Route) SetPath(path string) {
+	r.path = "/" + strings.TrimLeft(strings.TrimSpace(path), "/")
+}
+
+func (r *Route) Methods() []string {
+	return r.methods
+}
+
+func (r *Route) SetMethods(methods ...string) {
+	formatted := []string{}
+	for _, method := range methods {
+		formatted = append(formatted, strings.ToUpper(method))
+	}
+
+	r.methods = formatted
 }
