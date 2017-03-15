@@ -1,6 +1,8 @@
 package routing
 
-import "strings"
+import (
+	"strings"
+)
 
 type tree struct {
 	// Each node can have multiple children
@@ -27,11 +29,11 @@ func (t *tree) addRoute(route *Route) {
 	numSegments := len(segments)
 
 	for {
-		t, segment, _ := t.traverse(segments)
+		node, segment, _ := t.traverse(segments)
 
-		// Update an existing segment node
-		if t.segment == segment && numSegments == 1 {
-			t.route = route
+		// If we get the leaf node again set the route and end.
+		if node.segment == segment {
+			node.route = route
 			return
 		}
 
@@ -51,7 +53,7 @@ func (t *tree) addRoute(route *Route) {
 			newTreeNode.route = route
 		}
 
-		t.children = append(t.children, newTreeNode)
+		node.children = append(node.children, newTreeNode)
 		numSegments--
 
 		if numSegments == 0 {
@@ -67,7 +69,7 @@ func (t *tree) traverse(segments []string) (*tree, string, map[string]string) {
 	if len(t.children) > 0 {
 		for _, child := range t.children {
 			if segment == child.segment || child.isNamedParam {
-				if child.isNamedParam && params != nil {
+				if child.isNamedParam {
 					params[child.segment[1:]] = segment
 				}
 
