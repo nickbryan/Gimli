@@ -43,7 +43,7 @@ func (t *tree) addRoute(route *Route) {
 			route:        nil,
 		}
 
-		// Check for named route
+		// Check for named route.
 		if len(segment) > 0 && segment[0] == ':' {
 			newTreeNode.isNamedParam = true
 		}
