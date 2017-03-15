@@ -1,0 +1,10 @@
+Router
+* Need to refactor trie to prevent second pass on leaf node. In add route:
+    // If we get the leaf node again set the route and end.
+    if node.segment == segment {
+        node.route = route
+        return
+    }
+
+    If this check is removed then the trie will add multiple of the same leaf node as children
+    but with the route not set.
