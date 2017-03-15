@@ -21,10 +21,13 @@ func TestPathIsFormattedWhenSet(t *testing.T) {
 
 	r.SetPath("path/to/route")
 	assert.Equal(t, "/path/to/route", r.Path())
+
+	r.SetPath("")
+	assert.Equal(t, "/", r.Path())
 }
 
 func TestMethodsAreConvertedToNetHttpFormatWhenSet(t *testing.T) {
-	r := NewRoute("/path/to/route", nil)
+	r := NewRoute("", nil)
 
 	r.SetMethods("get", "head", "post", "PUT", "PATCH", "DELETE")
 	assert.Equal(t, []string{
