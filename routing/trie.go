@@ -4,20 +4,20 @@ import (
 	"strings"
 )
 
-// routeTree is defined to hide away the traverse method in the trie data structure
+// routeTrie is defined to hide away the traverse method in the trie data structure
 // defined below.
-type routeTree interface {
+type routeTrie interface {
 	add(route *Route)
 	search(path string) ([]*Route, map[string]string)
 }
 
-// tree is a simple trie data structure that allows for multiple routes to be added
-// to each node. The tree should be used to get all routes that match a path, any
+// trie is a simple trie data structure that allows for multiple routes to be added
+// to each node. The trie should be used to get all routes that match a path, any
 // matching on methods, regex, host, scheme etc should be handled elsewhere.
-type tree struct {
+type trie struct {
 	// Each node can have multiple children
 	// (ie. /some/path and /some/thing, "some" would have "path" and "thing" child node).
-	children []*tree
+	children []*trie
 
 	// The part of the path (if path was /some/path, "some" and "path" would be a segment).
 	segment string
@@ -29,20 +29,20 @@ type tree struct {
 	routes []*Route
 }
 
-// newRouteTree will return a new instance of a tree that implements the routeTree interface.
+// newRouteTrie will return a new instance of a trie that implements the routeTrie interface.
 // It also sets the first segment to / (this can be overridden by adding a route with "/" as the path.
-func newRouteTree() routeTree {
-	return &tree{segment: "/", isNamedParam: false, routes: nil}
+func newRouteTrie() routeTrie {
+	return &trie{segment: "/", isNamedParam: false, routes: nil}
 }
 
 // add will insert a new route into the trie.
-func (t *tree) add(route *Route) {
+func (t *trie) add(route *Route) {
 	segments := strings.Split(route.Path(), "/")[1:]
 	numSegments := len(segments)
 
 	for {
 		// Traverse the segments to see if we match, if we don't then the original
-		// tree and segment is returned.
+		// trie and segment is returned.
 		node, segment := t.traverse(segments, nil)
 
 		// If we find a node that matches the last segment then update it and return.
@@ -51,7 +51,7 @@ func (t *tree) add(route *Route) {
 			return
 		}
 
-		newTreeNode := &tree{
+		newTrieNode := &trie{
 			segment:      segment,
 			isNamedParam: false,
 			routes:       nil,
@@ -59,23 +59,23 @@ func (t *tree) add(route *Route) {
 
 		// Check for named route.
 		if len(segment) > 0 && segment[0] == ':' {
-			newTreeNode.isNamedParam = true
+			newTrieNode.isNamedParam = true
 		}
 
 		// If the last node is the segment before the one we are adding then add to its child.
 		if len(segments) > 1 && node.segment == segments[len(segments)-2] {
-			newTreeNode.routes = append(newTreeNode.routes, route)
-			node.children = append(node.children, newTreeNode)
+			newTrieNode.routes = append(newTrieNode.routes, route)
+			node.children = append(node.children, newTrieNode)
 			return
 		}
 
 		// This is the last segment of the path so add the route.
 		if numSegments == 1 {
-			newTreeNode.routes = append(newTreeNode.routes, route)
+			newTrieNode.routes = append(newTrieNode.routes, route)
 		}
 
 		// Add a new child to the current node.
-		node.children = append(node.children, newTreeNode)
+		node.children = append(node.children, newTrieNode)
 		numSegments--
 
 		// Once we have gone through all the segments we are not updating
@@ -88,7 +88,7 @@ func (t *tree) add(route *Route) {
 
 // search will traverse the trie looking for a match to the path.
 // If nothing is found it will return (nil, map[string]string{}).
-func (t *tree) search(path string) ([]*Route, map[string]string) {
+func (t *trie) search(path string) ([]*Route, map[string]string) {
 	params := map[string]string{}
 
 	node, _ := t.traverse(strings.Split(path, "/")[1:], params)
@@ -98,7 +98,7 @@ func (t *tree) search(path string) ([]*Route, map[string]string) {
 
 // traverse recursively searches the trie based on the path segments and extracts
 // named params along the way.
-func (t *tree) traverse(segments []string, params map[string]string) (*tree, string) {
+func (t *trie) traverse(segments []string, params map[string]string) (*trie, string) {
 	segment := segments[0]
 
 	if len(t.children) > 0 {

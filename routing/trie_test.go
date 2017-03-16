@@ -6,8 +6,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestNewRouteTree(t *testing.T) {
-	assert.Implements(t, (*routeTree)(nil), newRouteTree())
+func TestNewRouteTrie(t *testing.T) {
+	assert.Implements(t, (*routeTrie)(nil), newRouteTrie())
 }
 
 type routePair struct {
@@ -27,47 +27,47 @@ var routePairs []*routePair = []*routePair{
 }
 
 func TestNilAndEmptyMapIsReturnedIfRouteNotFound(t *testing.T) {
-	tree := newRouteTree()
+	trie := newRouteTrie()
 
 	for _, routePair := range routePairs {
-		tree.add(routePair.route)
+		trie.add(routePair.route)
 	}
 
-	routes, params := tree.search("/path/to")
+	routes, params := trie.search("/path/to")
 	assert.Nil(t, routes)
 	assert.Empty(t, params)
 }
 
 func TestRoutesCanBeMatchedByPath(t *testing.T) {
-	tree := newRouteTree()
+	trie := newRouteTrie()
 
 	for _, routePair := range routePairs {
-		tree.add(routePair.route)
+		trie.add(routePair.route)
 
-		routes, _ := tree.search(routePair.path)
+		routes, _ := trie.search(routePair.path)
 		assert.Equal(t, routePair.route, routes[0])
 	}
 }
 
 func TestMultipleRoutsCanBeAddedWithTheSamePath(t *testing.T) {
-	tree := newRouteTree()
+	trie := newRouteTrie()
 
 	route1 := NewRoute("/path/to/route", []string{"GET"})
 	route2 := NewRoute("/path/to/route", []string{"POST"})
 
-	tree.add(route1)
-	tree.add(route2)
+	trie.add(route1)
+	trie.add(route2)
 
-	routes, _ := tree.search("/path/to/route")
+	routes, _ := trie.search("/path/to/route")
 	assert.Equal(t, []*Route{route1, route2}, routes)
 }
 
 func TestNamedParamsAreReturnedWhenRoutesAreFound(t *testing.T) {
-	tree := newRouteTree()
+	trie := newRouteTrie()
 
 	route := NewRoute("/path/to/route/:name/with/:id", []string{"GET"})
-	tree.add(route)
+	trie.add(route)
 
-	_, params := tree.search("/path/to/route/nick/with/123")
+	_, params := trie.search("/path/to/route/nick/with/123")
 	assert.Equal(t, map[string]string{"name": "nick", "id": "123"}, params)
 }
