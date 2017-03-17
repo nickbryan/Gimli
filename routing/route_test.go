@@ -39,3 +39,10 @@ func TestMethodsAreConvertedToNetHttpFormatWhenSet(t *testing.T) {
 		http.MethodDelete,
 	}, r.Methods())
 }
+
+func TestNameIsNormalisedWhenSet(t *testing.T) {
+	r := NewRoute("", nil)
+
+	r.SetName(" HoMe ")
+	assert.Equal(t, "home", r.Name())
+}

@@ -5,6 +5,7 @@ import "strings"
 type Route struct {
 	path    string
 	methods []string
+	name    string
 }
 
 func NewRoute(path string, methods []string) *Route {
@@ -35,4 +36,12 @@ func (r *Route) SetMethods(methods ...string) {
 	}
 
 	r.methods = formatted
+}
+
+func (r *Route) Name() string {
+	return r.name
+}
+
+func (r *Route) SetName(name string) {
+	r.name = strings.ToLower(strings.TrimSpace(name))
 }
