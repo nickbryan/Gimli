@@ -133,12 +133,14 @@ func TestIsShared(t *testing.T) {
 	assert.True(t, c.IsShared("BindIsShared"))
 
 	c.Instance("InstanceIsShared", "Hello")
-	assert.True(t, c.IsShared("BindIsShared"))
+	assert.True(t, c.IsShared("InstanceIsShared"))
 
 	c.Factory("FactoryIsNotShared", func(container Container) interface{} {
 		return "Hi"
 	})
 	assert.False(t, c.IsShared("FactoryIsNotShared"))
+
+	assert.False(t, c.IsShared("SomethingNotBoundIsNotShared"))
 }
 
 func TestContainerIsPassedToResolver(t *testing.T) {
