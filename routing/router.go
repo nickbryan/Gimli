@@ -7,7 +7,9 @@ TODO: Maybe abstract interfaces for RouteAdder, RoutSearcher and RouteAdderSearc
 for extension?
 */
 
-type Router interface{}
+type Router interface {
+	Dispatch(response http.ResponseWriter, request *http.Request)
+}
 
 type router struct{}
 
@@ -16,5 +18,9 @@ func NewRouter() Router {
 }
 
 func (r *router) ServeHTTP(response http.ResponseWriter, request *http.Request) {
+	r.Dispatch(response, request)
+}
+
+func (r *router) Dispatch(response http.ResponseWriter, request *http.Request) {
 
 }
