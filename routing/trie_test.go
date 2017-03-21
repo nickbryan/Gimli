@@ -65,7 +65,7 @@ func TestMultipleRoutsCanBeAddedWithTheSamePath(t *testing.T) {
 func TestNamedParamsAreReturnedWhenRoutesAreFound(t *testing.T) {
 	trie := newRouteTrie()
 
-	route := NewRoute("/path/to/route/:name/with/:id", []string{"GET"})
+	route := NewRoute("/path/to/route/:name/with/:id", nil)
 	trie.add(route)
 
 	_, params := trie.search("/path/to/route/nick/with/123")
