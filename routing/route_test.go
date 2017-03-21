@@ -15,6 +15,11 @@ func TestNewRouteSetsParamsAsExpected(t *testing.T) {
 	assert.Equal(t, []string{"GET", "POST"}, r.Methods())
 }
 
+func TestMethodIsSetToGETIfMethodsPassedAsNil(t *testing.T) {
+	r := NewRoute("", nil)
+	assert.Equal(t, []string{"GET"}, r.Methods())
+}
+
 func TestPathIsFormattedWhenSet(t *testing.T) {
 	r := NewRoute("   ////path/to/route", nil)
 	assert.Equal(t, "/path/to/route", r.Path())

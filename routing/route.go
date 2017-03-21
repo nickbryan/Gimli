@@ -1,6 +1,9 @@
 package routing
 
-import "strings"
+import (
+	"net/http"
+	"strings"
+)
 
 type Route struct {
 	path    string
@@ -12,6 +15,11 @@ func NewRoute(path string, methods []string) *Route {
 	r := &Route{}
 
 	r.SetPath(path)
+
+	if methods == nil {
+		methods = []string{http.MethodGet}
+	}
+
 	r.SetMethods(methods...)
 
 	return r
