@@ -1,6 +1,9 @@
 package routing
 
-import "net/http"
+import (
+	"net/http"
+	"path"
+)
 
 /*
 TODO: Maybe abstract interfaces for RouteAdder, RoutSearcher and RouteAdderSearcher. This can be used in place of trie
@@ -31,7 +34,9 @@ func (r *router) ServeHTTP(response http.ResponseWriter, request *http.Request) 
 }
 
 func (r *router) Dispatch(response http.ResponseWriter, request *http.Request) {
-	routeCollection := r.collection.RoutesByPath(request.URL.Path)
+	url := path.Clean(request.URL.Path)
+
+	routeCollection := r.collection.RoutesByPath(url)
 
 	handler := r.notFoundHandler
 

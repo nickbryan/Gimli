@@ -28,6 +28,16 @@ func (collection *RouteCollection) Add(route *Route) {
 	collection.allRoutes = append(collection.allRoutes, route)
 }
 
+func (collection *RouteCollection) Has(route *Route) bool {
+	for _, r := range collection.allRoutes {
+		if r == route {
+			return true
+		}
+	}
+
+	return false
+}
+
 func (collection *RouteCollection) RoutesByPath(path string) *CompiledRouteCollection {
 	routes, params := collection.routes.search(path)
 

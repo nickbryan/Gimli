@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"net/http"
 )
 
 func TestNewRouteCollection(t *testing.T) {
@@ -91,4 +92,16 @@ func TestCountReturnsNumberOfRoutesInCollection(t *testing.T) {
 	assert.Equal(t, 3, rc.Count())
 }
 
-// TODO: routesByPathTest ir covered by router test?
+func TestHas(t *testing.T) {
+	rc := NewRouteCollection()
+	route := NewRoute("", nil, nil)
+	route2 := NewRoute("", []string{http.MethodPost}, nil)
+
+	assert.False(t, rc.Has(route))
+	rc.Add(route)
+	assert.True(t, rc.Has(route))
+
+	assert.False(t, rc.Has(route2))
+	rc.Add(route2)
+	assert.True(t, rc.Has(route2))
+}
