@@ -99,9 +99,9 @@ func TestHas(t *testing.T) {
 
 	assert.False(t, rc.Has(route))
 	rc.Add(route)
-	assert.True(t, rc.Has(route))
+	assert.True(t, rc.Has(NewRoute("", nil, nil)))
 
 	assert.False(t, rc.Has(route2))
 	rc.Add(route2)
-	assert.True(t, rc.Has(route2))
+	assert.True(t, rc.Has(NewRoute("", []string{http.MethodPost}, nil)))
 }
