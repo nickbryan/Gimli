@@ -16,14 +16,14 @@ type routePair struct {
 }
 
 var routePairs []*routePair = []*routePair{
-	{"/", NewRoute("/", nil)},
-	{"/path/to/route", NewRoute("/path/to/route", nil)},
-	{"/path/to/route/Nick", NewRoute("/path/to/route/:name", nil)},
-	{"/path/to/route/123/something", NewRoute("/path/to/route/:name/something", nil)},
-	{"/path/to/route/123/somethingelse", NewRoute("/path/to/route/:name/somethingelse", nil)},
-	{"/different", NewRoute("/different", nil)},
-	{"/different/path", NewRoute("/different/path", nil)},
-	{"/another/your-face/or/something/true", NewRoute("/another/:path/or/something/:else", nil)},
+	{"/", NewRoute("/", nil, nil)},
+	{"/path/to/route", NewRoute("/path/to/route", nil, nil)},
+	{"/path/to/route/Nick", NewRoute("/path/to/route/:name", nil, nil)},
+	{"/path/to/route/123/something", NewRoute("/path/to/route/:name/something", nil, nil)},
+	{"/path/to/route/123/somethingelse", NewRoute("/path/to/route/:name/somethingelse", nil, nil)},
+	{"/different", NewRoute("/different", nil, nil)},
+	{"/different/path", NewRoute("/different/path", nil, nil)},
+	{"/another/your-face/or/something/true", NewRoute("/another/:path/or/something/:else", nil, nil)},
 }
 
 func TestNilAndEmptyMapIsReturnedIfRouteNotFound(t *testing.T) {
@@ -52,8 +52,8 @@ func TestRoutesCanBeMatchedByPath(t *testing.T) {
 func TestMultipleRoutsCanBeAddedWithTheSamePath(t *testing.T) {
 	trie := newRouteTrie()
 
-	route1 := NewRoute("/path/to/route", []string{"GET"})
-	route2 := NewRoute("/path/to/route", []string{"POST"})
+	route1 := NewRoute("/path/to/route", []string{"GET"}, nil)
+	route2 := NewRoute("/path/to/route", []string{"POST"}, nil)
 
 	trie.add(route1)
 	trie.add(route2)
@@ -65,7 +65,7 @@ func TestMultipleRoutsCanBeAddedWithTheSamePath(t *testing.T) {
 func TestNamedParamsAreReturnedWhenRoutesAreFound(t *testing.T) {
 	trie := newRouteTrie()
 
-	route := NewRoute("/path/to/route/:name/with/:id", nil)
+	route := NewRoute("/path/to/route/:name/with/:id", nil, nil)
 	trie.add(route)
 
 	_, params := trie.search("/path/to/route/nick/with/123")

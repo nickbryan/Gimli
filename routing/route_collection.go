@@ -1,5 +1,10 @@
 package routing
 
+type CompiledRouteCollection struct {
+	Routes    []*Route
+	UrlParams map[string]string
+}
+
 type RouteCollection struct {
 	routes      routeTrie
 	allRoutes   []*Route
@@ -21,6 +26,12 @@ func (collection *RouteCollection) Add(route *Route) {
 
 	collection.routes.add(route)
 	collection.allRoutes = append(collection.allRoutes, route)
+}
+
+func (collection *RouteCollection) RoutesByPath(path string) *CompiledRouteCollection {
+	routes, params := collection.routes.search(path)
+
+	return &CompiledRouteCollection{routes, params}
 }
 
 func (collection *RouteCollection) RefreshNamedRoutes() {

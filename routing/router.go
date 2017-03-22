@@ -31,7 +31,20 @@ func (r *router) ServeHTTP(response http.ResponseWriter, request *http.Request) 
 }
 
 func (r *router) Dispatch(response http.ResponseWriter, request *http.Request) {
-	r.notFoundHandler.ServeHTTP(response, request)
+	routeCollection := r.collection.RoutesByPath(request.URL.Path)
+
+	handler := r.notFoundHandler
+
+	if len(routeCollection.Routes) > 0 {
+		for _, route := range routeCollection.Routes {
+			if route.Matches(request) {
+				handler = route.handler
+				break
+			}
+		}
+	}
+
+	handler.ServeHTTP(response, request)
 }
 
 func (r *router) SetNotFoundHandler(handler http.Handler) {

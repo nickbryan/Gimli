@@ -9,7 +9,7 @@ import (
 )
 
 func TestMethodMatcher(t *testing.T) {
-	route := NewRoute("/test", []string{http.MethodGet})
+	route := NewRoute("/test", []string{http.MethodGet}, nil)
 	matcher := MatcherFunc(MethodMatcher)
 
 	request := httptest.NewRequest(http.MethodGet, "/test", nil)

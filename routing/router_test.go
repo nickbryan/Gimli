@@ -43,14 +43,55 @@ func TestCustomNotFoundHandlerCanBeSet(t *testing.T) {
 	assert.Contains(t, response.Body.String(), "This is the custom text")
 }
 
-//func TestRouteHandlerIsCalledWhenRouteIsMatched(t *testing.T) {
-//	routeCollection := NewRouteCollection()
-//	routeCollection.Add(NewRoute("/test", nil))
-//
-//	router := NewRouter(routeCollection)
-//
-//	response := httptest.NewRecorder()
-//	request := httptest.NewRequest("", "/test", nil)
-//
-//	router.Dispatch(response, request)
-//}
+func TestRouteHandlerIsCalledWhenRouteIsMatched(t *testing.T) {
+	routeCollection := NewRouteCollection()
+	routeCollection.Add(NewRoute("/test", nil, http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+		rw.Write([]byte("The Handler Was Called!"))
+	})))
+
+	router := NewRouter(routeCollection)
+
+	response := httptest.NewRecorder()
+	request := httptest.NewRequest("", "/test", nil)
+
+	router.Dispatch(response, request)
+	assert.Contains(t, response.Body.String(), "The Handler Was Called!")
+}
+
+func TestMultipleFoundRoutesCanBeFilteredByMethod(t *testing.T) {
+	routeCollection := NewRouteCollection()
+	routeCollection.Add(NewRoute("/test", []string{http.MethodGet}, http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+		rw.Write([]byte("The Handler Was Called For GET!"))
+	})))
+	routeCollection.Add(NewRoute("/test", []string{http.MethodPost}, http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+		rw.Write([]byte("The Handler Was Called For POST!"))
+	})))
+
+	router := NewRouter(routeCollection)
+
+	response := httptest.NewRecorder()
+	request := httptest.NewRequest(http.MethodPost, "/test", nil)
+
+	router.Dispatch(response, request)
+	assert.Contains(t, response.Body.String(), "The Handler Was Called For POST!")
+}
+
+// TODO: add has for routes to collection to allow check for multiple of the same route being added.
+
+func TestIfMultipleRoutesMatchedTheFirstFoundIsReturned(t *testing.T) {
+	routeCollection := NewRouteCollection()
+	routeCollection.Add(NewRoute("/test", []string{http.MethodGet}, http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+		rw.Write([]byte("The Handler For Route1 Was Called!"))
+	})))
+	routeCollection.Add(NewRoute("/test", []string{http.MethodGet}, http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+		rw.Write([]byte("The Handler For Route2 Was Called!"))
+	})))
+
+	router := NewRouter(routeCollection)
+
+	response := httptest.NewRecorder()
+	request := httptest.NewRequest(http.MethodGet, "/test", nil)
+
+	router.Dispatch(response, request)
+	assert.Contains(t, response.Body.String(), "The Handler For Route1 Was Called!")
+}

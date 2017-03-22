@@ -15,7 +15,7 @@ func TestNewRouteCollection(t *testing.T) {
 func TestRouteCanBeAddedToCollection(t *testing.T) {
 	rc := NewRouteCollection()
 
-	route := NewRoute("/", nil)
+	route := NewRoute("/", nil, nil)
 	rc.Add(route)
 
 	routes, _ := rc.routes.search("/")
@@ -25,7 +25,7 @@ func TestRouteCanBeAddedToCollection(t *testing.T) {
 func TestNamedRouteIsAddedToRoutesAndNamedRouteMap(t *testing.T) {
 	rc := NewRouteCollection()
 
-	route := NewRoute("/", nil)
+	route := NewRoute("/", nil, nil)
 	route.SetName("home")
 
 	rc.Add(route)
@@ -42,7 +42,7 @@ func TestNamedRouteIsAddedToRoutesAndNamedRouteMap(t *testing.T) {
 func TestNonNamedRouteIsNotAddedToNamedRouteMap(t *testing.T) {
 	rc := NewRouteCollection()
 
-	route := NewRoute("/", nil)
+	route := NewRoute("/", nil, nil)
 
 	assert.NotContains(t, rc.namedRoutes, route.Name())
 }
@@ -50,8 +50,8 @@ func TestNonNamedRouteIsNotAddedToNamedRouteMap(t *testing.T) {
 func TestNamedAndNonNamedRoutesAreAddedToAllRoutes(t *testing.T) {
 	rc := NewRouteCollection()
 
-	route := NewRoute("/test", nil)
-	namedRoute := NewRoute("/", nil)
+	route := NewRoute("/test", nil, nil)
+	namedRoute := NewRoute("/", nil, nil)
 	namedRoute.SetName("home")
 
 	rc.Add(route)
@@ -64,7 +64,7 @@ func TestNamedAndNonNamedRoutesAreAddedToAllRoutes(t *testing.T) {
 func TestNamedRoutesCanBeUpdatedInCollection(t *testing.T) {
 	rc := NewRouteCollection()
 
-	route := NewRoute("/", nil)
+	route := NewRoute("/", nil, nil)
 
 	rc.Add(route)
 
@@ -80,9 +80,9 @@ func TestNamedRoutesCanBeUpdatedInCollection(t *testing.T) {
 func TestCountReturnsNumberOfRoutesInCollection(t *testing.T) {
 	rc := NewRouteCollection()
 
-	route1 := NewRoute("/", nil)
-	route2 := NewRoute("/a", nil)
-	route3 := NewRoute("/b", nil)
+	route1 := NewRoute("/", nil, nil)
+	route2 := NewRoute("/a", nil, nil)
+	route3 := NewRoute("/b", nil, nil)
 
 	rc.Add(route1)
 	rc.Add(route2)
@@ -90,3 +90,5 @@ func TestCountReturnsNumberOfRoutesInCollection(t *testing.T) {
 
 	assert.Equal(t, 3, rc.Count())
 }
+
+// TODO: routesByPathTest ir covered by router test?
