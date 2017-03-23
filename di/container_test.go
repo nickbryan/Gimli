@@ -88,11 +88,9 @@ func TestMustResolvePanicsWhenNotBound(t *testing.T) {
 func TestBindAddsResolverToContainer(t *testing.T) {
 	c := NewContainer()
 
-	resolver := func(container Container) interface{} {
+	resolver := Resolver(func(container Container) interface{} {
 		return 42
-	}
-
-	// TODO: assert function is of type Resolver
+	})
 
 	c.Bind("TheMeaningOfLife", resolver)
 	assert.True(t, c.Has("TheMeaningOfLife"))
@@ -135,12 +133,14 @@ func TestIsShared(t *testing.T) {
 	assert.True(t, c.IsShared("BindIsShared"))
 
 	c.Instance("InstanceIsShared", "Hello")
-	assert.True(t, c.IsShared("BindIsShared"))
+	assert.True(t, c.IsShared("InstanceIsShared"))
 
 	c.Factory("FactoryIsNotShared", func(container Container) interface{} {
 		return "Hi"
 	})
 	assert.False(t, c.IsShared("FactoryIsNotShared"))
+
+	assert.False(t, c.IsShared("SomethingNotBoundIsNotShared"))
 }
 
 func TestContainerIsPassedToResolver(t *testing.T) {
