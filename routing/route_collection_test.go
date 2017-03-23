@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"net/http"
 )
 
 func TestNewRouteCollection(t *testing.T) {
@@ -19,8 +18,13 @@ func TestRouteCanBeAddedToCollection(t *testing.T) {
 	route := NewRoute("/", nil, nil)
 	rc.Add(route)
 
-	routes, _ := rc.routes.search("/")
-	assert.Contains(t, routes, route)
+	compiledRoutes := rc.RoutesByPath("/")
+	assert.Contains(t, compiledRoutes.Routes, route)
+}
+
+func TestRouteByNameReturnsNilIfRouteNotFound(t *testing.T) {
+	rc := NewRouteCollection()
+	assert.Nil(t, rc.RouteByName("routeName"))
 }
 
 func TestNamedRouteIsAddedToRoutesAndNamedRouteMap(t *testing.T) {
@@ -31,21 +35,17 @@ func TestNamedRouteIsAddedToRoutesAndNamedRouteMap(t *testing.T) {
 
 	rc.Add(route)
 
-	routes, _ := rc.routes.search("/")
-	assert.Contains(t, routes, route)
+	compiledRoutes := rc.RoutesByPath("/")
+	assert.Contains(t, compiledRoutes.Routes, route)
 
-	assert.Contains(t, rc.namedRoutes, route.Name())
-	assert.Equal(t, route, rc.namedRoutes[route.Name()])
+	assert.Equal(t, route, rc.RouteByName(route.Name()))
 }
-
-// TODO: test that named routes cannot be overridden
 
 func TestNonNamedRouteIsNotAddedToNamedRouteMap(t *testing.T) {
 	rc := NewRouteCollection()
-
 	route := NewRoute("/", nil, nil)
 
-	assert.NotContains(t, rc.namedRoutes, route.Name())
+	assert.Nil(t, rc.RouteByName(route.Name()))
 }
 
 func TestNamedAndNonNamedRoutesAreAddedToAllRoutes(t *testing.T) {
@@ -64,44 +64,23 @@ func TestNamedAndNonNamedRoutesAreAddedToAllRoutes(t *testing.T) {
 
 func TestNamedRoutesCanBeUpdatedInCollection(t *testing.T) {
 	rc := NewRouteCollection()
-
 	route := NewRoute("/", nil, nil)
-
 	rc.Add(route)
 
-	assert.NotContains(t, rc.namedRoutes, route.Name())
+	assert.Nil(t, rc.RouteByName(route.Name()))
 
 	route.SetName("home")
 	rc.RefreshNamedRoutes()
 
-	assert.Contains(t, rc.namedRoutes, route.Name())
-	assert.Equal(t, route, rc.namedRoutes[route.Name()])
+	assert.Equal(t, route, rc.RouteByName(route.Name()))
 }
 
 func TestCountReturnsNumberOfRoutesInCollection(t *testing.T) {
 	rc := NewRouteCollection()
 
-	route1 := NewRoute("/", nil, nil)
-	route2 := NewRoute("/a", nil, nil)
-	route3 := NewRoute("/b", nil, nil)
-
-	rc.Add(route1)
-	rc.Add(route2)
-	rc.Add(route3)
+	rc.Add(NewRoute("/a", nil, nil))
+	rc.Add(NewRoute("/b", nil, nil))
+	rc.Add(NewRoute("/c", nil, nil))
 
 	assert.Equal(t, 3, rc.Count())
-}
-
-func TestHas(t *testing.T) {
-	rc := NewRouteCollection()
-	route := NewRoute("", nil, nil)
-	route2 := NewRoute("", []string{http.MethodPost}, nil)
-
-	assert.False(t, rc.Has(route))
-	rc.Add(route)
-	assert.True(t, rc.Has(NewRoute("", nil, nil)))
-
-	assert.False(t, rc.Has(route2))
-	rc.Add(route2)
-	assert.True(t, rc.Has(NewRoute("", []string{http.MethodPost}, nil)))
 }

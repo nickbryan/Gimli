@@ -9,15 +9,15 @@ import (
 )
 
 func TestNewRouter(t *testing.T) {
-	assert.Implements(t, (*Router)(nil), NewRouter(NewRouteCollection()))
+	assert.Implements(t, (*Router)(nil), NewRouter())
 }
 
 func TestRouterCanBePassedAsHttpHandler(t *testing.T) {
-	assert.Implements(t, (*http.Handler)(nil), NewRouter(NewRouteCollection()))
+	assert.Implements(t, (*http.Handler)(nil), NewRouter())
 }
 
 func TestDispatchCallsNotFoundHandlerWhenNoRouteFound(t *testing.T) {
-	router := NewRouter(NewRouteCollection())
+	router := NewRouter()
 	response := httptest.NewRecorder()
 	request := httptest.NewRequest("", "/", nil)
 
@@ -28,7 +28,7 @@ func TestDispatchCallsNotFoundHandlerWhenNoRouteFound(t *testing.T) {
 }
 
 func TestCustomNotFoundHandlerCanBeSet(t *testing.T) {
-	router := NewRouter(NewRouteCollection())
+	router := NewRouter()
 	router.SetNotFoundHandler(http.HandlerFunc(func(response http.ResponseWriter, request *http.Request) {
 		response.WriteHeader(http.StatusNotImplemented)
 		response.Write([]byte("This is the custom text"))
@@ -49,7 +49,7 @@ func TestRouteHandlerIsCalledWhenRouteIsMatched(t *testing.T) {
 		rw.Write([]byte("The Handler Was Called!"))
 	})))
 
-	router := NewRouter(routeCollection)
+	router := NewRouterFromCollection(routeCollection)
 
 	response := httptest.NewRecorder()
 	request := httptest.NewRequest("", "/test", nil)
@@ -67,7 +67,7 @@ func TestMultipleFoundRoutesCanBeFilteredByMethod(t *testing.T) {
 		rw.Write([]byte("The Handler Was Called For POST!"))
 	})))
 
-	router := NewRouter(routeCollection)
+	router := NewRouterFromCollection(routeCollection)
 
 	response := httptest.NewRecorder()
 	request := httptest.NewRequest(http.MethodPost, "/test", nil)
@@ -75,8 +75,6 @@ func TestMultipleFoundRoutesCanBeFilteredByMethod(t *testing.T) {
 	router.Dispatch(response, request)
 	assert.Contains(t, response.Body.String(), "The Handler Was Called For POST!")
 }
-
-// TODO: add has for routes to collection to allow check for multiple of the same route being added.
 
 func TestIfMultipleRoutesMatchedTheFirstFoundIsReturned(t *testing.T) {
 	routeCollection := NewRouteCollection()
@@ -87,7 +85,7 @@ func TestIfMultipleRoutesMatchedTheFirstFoundIsReturned(t *testing.T) {
 		rw.Write([]byte("The Handler For Route2 Was Called!"))
 	})))
 
-	router := NewRouter(routeCollection)
+	router := NewRouterFromCollection(routeCollection)
 
 	response := httptest.NewRecorder()
 	request := httptest.NewRequest(http.MethodGet, "/test", nil)

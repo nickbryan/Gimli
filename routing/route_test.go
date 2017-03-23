@@ -53,7 +53,7 @@ func TestNameIsNormalisedWhenSet(t *testing.T) {
 	assert.Equal(t, "home", r.Name())
 }
 
-func TestRouteCaBeFilteredTroughMatchers(t *testing.T) {
+func TestRouteCaBeFilteredThroughMatchers(t *testing.T) {
 	r := NewRoute("/test", []string{http.MethodGet}, nil)
 	r.AddMatcher(MatcherFunc(MethodMatcher))
 
