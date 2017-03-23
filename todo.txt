@@ -1,10 +1,12 @@
-Router
-* Need to refactor trie to prevent second pass on leaf node. In add route:
-    // If we get the leaf node again set the route and end.
-    if node.segment == segment {
-        node.route = route
-        return
-    }
+General
+* Improve readme file.
+* Improve api documentation and check against go doc.
 
-    If this check is removed then the trie will add multiple of the same leaf node as children
-    but with the route not set.
+Router
+* Decide on how named routes should be handled when another route is added with the same name, this also includes
+refreshing of named route list. Should it panic, overwrite(update) route, return an error string? Should it still be added
+to all routes/trie?
+* Possible abstract trie to separate interfaces, RouteAdder - RouteSearcher - RouteAdderSearcher?
+* Add has method for collection to check if route exists, will also need a compare method on route so that slices in
+routes can be checked for equality. See https://play.golang.org/p/J48Jz51C73 and https://play.golang.org/p/mzvvoksjDq
+* Decide what to do about nil route handlers.
