@@ -5,33 +5,21 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
-	"github.com/nickbryan/framework/config"
-	"github.com/nickbryan/framework/di"
+	"github.com/nickbryan/gimli/config"
+	"github.com/nickbryan/gimli/di"
 )
 
 type ConfigurationProvider struct{}
 
-func checkError(e error) {
-	if e != nil {
-		panic(e)
-	}
-}
-
 func (p *ConfigurationProvider) Register(container di.Container) {
 	items := map[string]interface{}{}
-	loadedFromCache := false
-	configPath, err := container.Make("path.config")
-	checkError(err)
-
-	// TODO: load cached config
+	configPath := container.MustResolve("path.config")
 
 	conf := config.NewPopulatedRepository(items)
 
 	container.Instance("config", conf)
 
-	if loadedFromCache == false {
-		p.loadConfigurationFiles(configPath.(string), conf)
-	}
+	p.loadConfigurationFiles(configPath.(string), conf)
 
 	container.Instance("env", conf.GetDefault("env", "production"))
 }
@@ -51,5 +39,11 @@ func (p *ConfigurationProvider) loadConfigurationFiles(configPath string, conf *
 		for key, val := range parsed.(map[string]interface{}) {
 			conf.Set(key, val)
 		}
+	}
+}
+
+func checkError(e error) {
+	if e != nil {
+		panic(e)
 	}
 }

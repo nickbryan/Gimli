@@ -1,14 +1,14 @@
 package providers
 
 import (
-	"github.com/nickbryan/framework/di"
-	"github.com/nickbryan/framework/routing"
+	"github.com/nickbryan/gimli/di"
+	"github.com/nickbryan/gimli/routing"
 )
 
 type RoutingProvider struct{}
 
 func (p *RoutingProvider) Register(container di.Container) {
-	container.Singleton("router", func(container di.Container) interface{} {
+	container.Bind("router", func(container di.Container) interface{} {
 		return routing.NewRouter()
 	})
 }

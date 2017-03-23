@@ -2,6 +2,10 @@ General
 * Improve readme file.
 * Improve api documentation and check against go doc.
 
+Providers
+* Config
+    * Cash config in the same way laravels service provider does.
+
 Router
 * Decide on how named routes should be handled when another route is added with the same name, this also includes
 refreshing of named route list. Should it panic, overwrite(update) route, return an error string? Should it still be added

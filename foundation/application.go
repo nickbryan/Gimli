@@ -1,39 +1,35 @@
 package foundation
 
 import (
-	"net/http"
 	"path/filepath"
 	"strings"
 
-	"github.com/nickbryan/framework/di"
-	"github.com/nickbryan/framework/foundation/providers"
+	"github.com/nickbryan/gimli/di"
+	"github.com/nickbryan/gimli/foundation/providers"
 )
 
-const VERSION = "0.1.0"
-
 type Application interface {
-	di.Container
+	Container() di.Container
 
+	SetBasePath(basePath string)
 	BasePath() string
 	BootstrapPath() string
 	ConfigPath() string
 	Path() string
 	PublicPath() string
-	SetBasePath(basePath string) Application
-	Run()
+
 	Environment() string
 	IsEnvironment(env string) bool
 }
 
 type application struct {
-	basePath string
-
-	di.Container
+	container di.Container
+	basePath  string
 }
 
 func NewApplication(basePath string) Application {
 	app := &application{
-		Container: di.NewContainer(),
+		container: di.NewContainer(),
 	}
 
 	app.SetBasePath(basePath)
@@ -45,14 +41,25 @@ func NewApplication(basePath string) Application {
 }
 
 func (app *application) registerBaseBindings() {
-	di.SetInstance(app)
-	app.Instance("app", app)
-	app.Instance("container", app)
+	app.container.Instance("app", app)
+	app.container.Instance("container", app.container)
+	di.SetInstance(app.container)
 }
 
 func (app *application) registerBaseProviders() {
-	app.Register(&providers.ConfigurationProvider{})
-	app.Register(&providers.RoutingProvider{})
+	app.container.Register(&providers.ConfigurationProvider{})
+	app.container.Register(&providers.RoutingProvider{})
+}
+
+func (app *application) Container() di.Container {
+	return app.container
+}
+
+func (app *application) SetBasePath(basePath string) {
+	// Test path.clean
+	app.basePath = strings.TrimRight(basePath, `\/`)
+
+	app.bindPathsInContainer()
 }
 
 func (app *application) BasePath() string {
@@ -75,39 +82,18 @@ func (app *application) PublicPath() string {
 	return app.basePath + string(filepath.Separator) + "public"
 }
 
-func (app *application) SetBasePath(basePath string) Application {
-	app.basePath = strings.TrimRight(basePath, `\/`)
-
-	app.bindPathsInContainer()
-
-	return app
-}
-
 func (app *application) bindPathsInContainer() {
-	app.Instance("path", app.Path())
-	app.Instance("path.base", app.BasePath())
-	app.Instance("path.bootstrap", app.BootstrapPath())
-	app.Instance("path.config", app.ConfigPath())
-	app.Instance("path.public", app.PublicPath())
+	app.container.Instance("path", app.Path())
+	app.container.Instance("path.base", app.BasePath())
+	app.container.Instance("path.bootstrap", app.BootstrapPath())
+	app.container.Instance("path.config", app.ConfigPath())
+	app.container.Instance("path.public", app.PublicPath())
 }
 
 func (app *application) Environment() string {
-	env, err := App().Make("env")
-	if err != nil {
-		panic(err)
-	}
-
-	return env.(string)
+	return app.container.MustResolve("env").(string)
 }
 
 func (app *application) IsEnvironment(env string) bool {
 	return app.Environment() == env
-}
-
-func (app *application) Run() {
-	host, port := Config().Get("host").(string), Config().Get("port").(string)
-
-	http.ListenAndServe(host+":"+port, http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-		Router().Parse(req, res)
-	}))
 }
