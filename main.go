@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/nickbryan/gimli/foundation/commands"
 	"github.com/urfave/cli"
 )
 
@@ -27,8 +28,7 @@ func main() {
 					return nil
 				}
 
-				fmt.Println("new project at " + c.Args().First())
-				return nil
+				return commands.New(c.Args().First(), nil).Run()
 			},
 		},
 	}
