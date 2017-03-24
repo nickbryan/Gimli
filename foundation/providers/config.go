@@ -5,8 +5,8 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
-	"github.com/nickbryan/Gimli/config"
-	"github.com/nickbryan/Gimli/di"
+	"github.com/nickbryan/gimli/config"
+	"github.com/nickbryan/gimli/di"
 )
 
 type ConfigurationProvider struct{}

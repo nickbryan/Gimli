@@ -1,6 +1,7 @@
 General
 * Improve readme file.
 * Improve api documentation and check against go doc.
+* Add doc.go for each package.
 
 Providers
 * Config

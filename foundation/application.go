@@ -4,8 +4,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/nickbryan/Gimli/di"
-	"github.com/nickbryan/Gimli/foundation/providers"
+	"github.com/nickbryan/gimli/di"
+	"github.com/nickbryan/gimli/foundation/providers"
 )
 
 type Application interface {
