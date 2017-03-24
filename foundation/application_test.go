@@ -3,9 +3,9 @@ package foundation
 import (
 	"testing"
 
-	"github.com/nickbryan/gimli/config"
-	"github.com/nickbryan/gimli/di"
-	"github.com/nickbryan/gimli/routing"
+	"github.com/nickbryan/Gimli/config"
+	"github.com/nickbryan/Gimli/di"
+	"github.com/nickbryan/Gimli/routing"
 	"github.com/stretchr/testify/assert"
 )
 

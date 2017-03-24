@@ -1,8 +1,8 @@
 package providers
 
 import (
-	"github.com/nickbryan/gimli/di"
-	"github.com/nickbryan/gimli/routing"
+	"github.com/nickbryan/Gimli/di"
+	"github.com/nickbryan/Gimli/routing"
 )
 
 type RoutingProvider struct{}
