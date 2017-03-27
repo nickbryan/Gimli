@@ -3,6 +3,9 @@ General
 * Improve api documentation and check against go doc.
 * Add doc.go for each package.
 
+Tests
+* Add messages to boolean checks etc.
+
 Providers
 * Config
     * Cash config in the same way laravels service provider does.

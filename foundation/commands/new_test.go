@@ -11,8 +11,7 @@ import (
 var goPath = "/home/nickbryan/go"
 
 func TestErrorIsReturnedIfProjectAlreadyExists(t *testing.T) {
-	os.Setenv("GOPATH", "/home/nickbryan/go")
-
+	os.Setenv("GOPATH", goPath)
 	filesystem := afero.NewMemMapFs()
 
 	err := filesystem.MkdirAll(goPath+"/src/github.com/nickbryan/testapp", os.ModePerm)
@@ -22,4 +21,16 @@ func TestErrorIsReturnedIfProjectAlreadyExists(t *testing.T) {
 
 	command := New("github.com/nickbryan/testapp", filesystem).Run()
 	assert.EqualError(t, command, "Project [testapp] already exists in [github.com/nickbryan/].")
+}
+
+func TestSkeletonIsCopiedToPathIfNoError(t *testing.T) {
+	os.Setenv("GOPATH", goPath)
+	filesystem := afero.NewMemMapFs()
+	path := goPath + "/src/github.com/nickbryan/testapp"
+
+	command := New("github.com/nickbryan/testapp", filesystem).Run()
+	assert.Nil(t, command)
+
+	ok, _ := afero.DirExists(filesystem, path)
+	assert.True(t, ok, "Skeleton has not been copied to path")
 }
