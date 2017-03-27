@@ -28,11 +28,11 @@ func TestSkeletonIsCopiedToPathIfNoError(t *testing.T) {
 	base := afero.NewOsFs()
 	roBase := afero.NewReadOnlyFs(base)
 	filesystem := afero.NewCopyOnWriteFs(roBase, afero.NewMemMapFs())
-	//path := goPath + "/src/github.com/nickbryan/testapp"
+	path := goPath + "/src/github.com/nickbryan/testapp"
 
 	command := New("github.com/nickbryan/testapp", filesystem).Run()
 	assert.Nil(t, command)
 
-	ok, _ := afero.DirExists(base, "/Users/nick/go/src/github.com/nickbryan/gimli/foundation/skeleton")
+	ok, _ := afero.DirExists(filesystem, path)
 	assert.True(t, ok, "Skeleton has not been copied to path")
 }

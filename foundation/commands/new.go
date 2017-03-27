@@ -10,6 +10,7 @@ import (
 	"io"
 	//"io/ioutil"
 	"fmt"
+	"io/ioutil"
 	"path"
 	"path/filepath"
 	"runtime"
@@ -50,17 +51,12 @@ func (command *newCommand) Run() error {
 
 	err := command.copyDir(path.Dir(path.Dir(file))+"/skeleton", projectPath)
 	if err != nil {
-		panic(err) //cli.NewExitError(err, 1)
+		cli.NewExitError(err, 1)
 	}
 
 	return nil
 }
 
-// CopyFile copies the contents of the file named src to the file named
-// by dst. The file will be created if it does not already exist. If the
-// destination file exists, all it's contents will be replaced by the contents
-// of the source file. The file mode will be copied from the source and
-// the copied data is synced/flushed to stable storage.
 func (command *newCommand) copyFile(src, dst string) (err error) {
 	in, err := command.filesystem.Open(src)
 	if err != nil {
@@ -88,7 +84,7 @@ func (command *newCommand) copyFile(src, dst string) (err error) {
 		return
 	}
 
-	si, err := command.filesystem.Stat(src)
+	si, err := os.Stat(src)
 	if err != nil {
 		return
 	}
@@ -100,14 +96,11 @@ func (command *newCommand) copyFile(src, dst string) (err error) {
 	return
 }
 
-// CopyDir recursively copies a directory tree, attempting to preserve permissions.
-// Source directory must exist, destination directory must *not* exist.
-// Symlinks are ignored and skipped.
 func (command *newCommand) copyDir(src string, dst string) (err error) {
 	src = filepath.Clean(src)
 	dst = filepath.Clean(dst)
 
-	si, err := command.filesystem.Stat(src)
+	si, err := os.Stat(src)
 	if err != nil {
 		return err
 	}
@@ -115,45 +108,45 @@ func (command *newCommand) copyDir(src string, dst string) (err error) {
 		return fmt.Errorf("source is not a directory")
 	}
 
-	//_, err = command.filesystem.Stat(dst)
-	//if err != nil && !os.IsNotExist(err) {
-	//	return
-	//}
-	//if err == nil {
-	//	return fmt.Errorf("destination already exists")
-	//}
-	//
-	//err = command.filesystem.MkdirAll(dst, si.Mode())
-	//if err != nil {
-	//	return
-	//}
-	//
-	//entries, err := ioutil.ReadDir(src)
-	//if err != nil {
-	//	return
-	//}
-	//
-	//for _, entry := range entries {
-	//	srcPath := filepath.Join(src, entry.Name())
-	//	dstPath := filepath.Join(dst, entry.Name())
-	//
-	//	if entry.IsDir() {
-	//		err = command.copyDir(srcPath, dstPath)
-	//		if err != nil {
-	//			return
-	//		}
-	//	} else {
-	//		// Skip symlinks.
-	//		if entry.Mode()&os.ModeSymlink != 0 {
-	//			continue
-	//		}
-	//
-	//		err = command.copyFile(srcPath, dstPath)
-	//		if err != nil {
-	//			return
-	//		}
-	//	}
-	//}
+	_, err = command.filesystem.Stat(dst)
+	if err != nil && !os.IsNotExist(err) {
+		return
+	}
+	if err == nil {
+		return fmt.Errorf("destination already exists")
+	}
+
+	err = command.filesystem.MkdirAll(dst, si.Mode())
+	if err != nil {
+		return
+	}
+
+	entries, err := ioutil.ReadDir(src)
+	if err != nil {
+		return
+	}
+
+	for _, entry := range entries {
+		srcPath := filepath.Join(src, entry.Name())
+		dstPath := filepath.Join(dst, entry.Name())
+
+		if entry.IsDir() {
+			err = command.copyDir(srcPath, dstPath)
+			if err != nil {
+				return
+			}
+		} else {
+			// Skip symlinks.
+			if entry.Mode()&os.ModeSymlink != 0 {
+				continue
+			}
+
+			err = command.copyFile(srcPath, dstPath)
+			if err != nil {
+				return
+			}
+		}
+	}
 
 	return
 }

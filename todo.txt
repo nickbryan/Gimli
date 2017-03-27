@@ -3,6 +3,10 @@ General
 * Improve api documentation and check against go doc.
 * Add doc.go for each package.
 
+Commands
+    New
+        * Need to figure out why filesystem stat gets file not exists on mac https://github.com/spf13/afero/issues/115
+
 Tests
 * Add messages to boolean checks etc.
 
