@@ -1,5 +1,7 @@
 package main
 
+import "github.com/nickbryan/gimli/foundation/skeleton/bootstrap"
+
 func main() {
-	println("Hello World!")
+	bootstrap.Application().Run()
 }

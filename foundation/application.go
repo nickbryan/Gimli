@@ -1,15 +1,19 @@
 package foundation
 
 import (
+	"net/http"
 	"path/filepath"
 	"strings"
 
+	"github.com/nickbryan/gimli/config"
 	"github.com/nickbryan/gimli/di"
 	"github.com/nickbryan/gimli/foundation/providers"
+	"github.com/nickbryan/gimli/routing"
 )
 
 type Application interface {
 	Container() di.Container
+	Run()
 
 	SetBasePath(basePath string)
 	BasePath() string
@@ -38,6 +42,13 @@ func NewApplication(basePath string) Application {
 	app.registerBaseProviders()
 
 	return app
+}
+
+func (app *application) Run() {
+	conf := app.container.MustResolve("config").(config.Repository)
+	host, port := conf.Get("host").(string), conf.Get("port").(string)
+
+	http.ListenAndServe(host+":"+port, app.container.MustResolve("router").(routing.Router))
 }
 
 func (app *application) registerBaseBindings() {

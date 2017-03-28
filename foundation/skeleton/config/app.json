@@ -1,0 +1,11 @@
+{
+  "name": "Test App",
+  "env": "local",
+  "debug": true,
+  "host": "localhost",
+  "port": "8080",
+  "timezone": "UTC",
+  "static_directories": [
+    "img", "js", "css"
+  ]
+}
