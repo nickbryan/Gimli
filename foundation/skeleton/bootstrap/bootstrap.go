@@ -2,10 +2,9 @@ package bootstrap
 
 import (
 	"github.com/nickbryan/gimli/foundation"
-	_ "github.com/nickbryan/gimli/foundation/skeleton/app"
 )
 
-const BasePath = "YOUR_APPLICATION_BASE_PATH"
+const BasePath = "/home/mifdev/go/src/github.com/nickbryan/gimli/foundation/skeleton"
 
 var application foundation.Application
 

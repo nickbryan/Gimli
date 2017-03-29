@@ -44,7 +44,46 @@ func (command *newCommand) Run() error {
 		return cli.NewExitError(err.Error(), 1)
 	}
 
+	if err = command.replacePaths(projectPath); err != nil {
+		return cli.NewExitError(err.Error(), 1)
+	}
+
 	return nil
+}
+
+func (command *newCommand) replacePaths(dir string) (err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			err = r.(error)
+		}
+	}()
+
+	command.replaceInFile(dir+"/main.go", "github.com/nickbryan/gimli/foundation/skeleton", command.path)
+	command.replaceInFile(dir+"/bootstrap/routes.go", "github.com/nickbryan/gimli/foundation/skeleton", command.path)
+	command.replaceInFile(dir+"/bootstrap/bootstrap.go", "/home/mifdev/go/src/github.com/nickbryan/gimli/foundation/skeleton", dir)
+
+	return
+}
+
+func (command *newCommand) replaceInFile(filePath, text, replace string) {
+	file, err := command.filesystem.OpenFile(filePath, os.O_RDWR, os.ModePerm)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	read, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		panic(err)
+	}
+
+	newContents := strings.Replace(string(read), text, replace, -1)
+
+	file.Truncate(0)
+	_, err = file.Write([]byte(newContents))
+	if err != nil {
+		panic(err)
+	}
 }
 
 func (command *newCommand) copyDir(src string, dst string) error {

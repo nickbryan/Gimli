@@ -8,6 +8,28 @@ Commands
         * Need to figure out why filesystem stat gets file not exists on mac https://github.com/spf13/afero/issues/115
         * Consider switching to https://github.com/blang/vfs
         * Need a way to handle multiple go paths
+        * When reading from file opened by filesystem.OpenFile there a are a lot of NUL characters that get written back.
+            -Original Code:
+                file, err := command.filesystem.OpenFile(filePath, os.O_RDWR, os.ModePerm)
+                if err != nil {
+                    panic(err)
+                }
+                defer file.Close()
+
+                data, err := ioutil.ReadAll(file)
+                if err != nil {
+                	panic(err)
+                }
+                data = bytes.Trim(data, "\x00")
+
+                newData := strings.Replace(string(data), text, replace, -1)
+
+                file.Truncate(0)
+
+                _, err = file.Write(bytes.Trim([]byte(newData), "\x00"))
+                if err != nil {
+                	panic(err)
+                }
 
 Tests
 * Add messages to boolean checks etc.

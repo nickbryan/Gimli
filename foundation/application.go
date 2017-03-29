@@ -45,7 +45,7 @@ func NewApplication(basePath string) Application {
 }
 
 func (app *application) Run() {
-	conf := app.container.MustResolve("config").(config.Repository)
+	conf := app.container.MustResolve("config").(*config.Repository)
 	host, port := conf.Get("host").(string), conf.Get("port").(string)
 
 	http.ListenAndServe(host+":"+port, app.container.MustResolve("router").(routing.Router))
