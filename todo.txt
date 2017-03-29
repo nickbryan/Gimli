@@ -33,34 +33,5 @@ routes can be checked for equality. See https://play.golang.org/p/J48Jz51C73 and
     		return
     	}
 * Add controllers.
-* Add helper methods:
-    // Map a handler to the given method and uri pattern
-    func (router *router) Map(method RequestMethod, pattern string, handler interface{}) {
-    	if pattern[0] != '/' {
-    		panic("Path must start with a '/'.")
-    	}
-
-    	route := &Route{method, pattern, handler}
-
-    	router.routes.addNode(method, pattern, route)
-    }
-
-    // Get is a convenient wrapper around map for get requests
-    func (router *router) Get(pattern string, handler RouteClosure) {
-    	router.Map(GET, pattern, handler)
-    }
-
-    // Post is a convenient wrapper around map for post requests
-    func (router *router) Post(pattern string, handler RouteClosure) {
-    	router.Map(POST, pattern, handler)
-    }
-
-    // Put is a convenient wrapper around map for put requests
-    func (router *router) Put(pattern string, handler RouteClosure) {
-    	router.Map(PUT, pattern, handler)
-    }
-
-    // Delete is a convenient wrapper around map for delete requests
-    func (router *router) Delete(pattern string, handler RouteClosure) {
-    	router.Map(DELETE, pattern, handler)
-    }
+* Array unique Match request methods.
+* Could TestStatusOKIsReturnedByDefault be removed in router due to testing go's response default?
