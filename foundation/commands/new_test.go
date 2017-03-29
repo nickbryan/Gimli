@@ -8,10 +8,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var goPath = "/home/nickbryan/go"
+var goPath = os.Getenv("GOPATH")
+
+// Test default fs is set
 
 func TestErrorIsReturnedIfProjectAlreadyExists(t *testing.T) {
-	os.Setenv("GOPATH", goPath)
 	filesystem := afero.NewMemMapFs()
 
 	err := filesystem.MkdirAll(goPath+"/src/github.com/nickbryan/testapp", os.ModePerm)
@@ -20,11 +21,10 @@ func TestErrorIsReturnedIfProjectAlreadyExists(t *testing.T) {
 	}
 
 	command := New("github.com/nickbryan/testapp", filesystem).Run()
-	assert.EqualError(t, command, "Project [testapp] already exists in [github.com/nickbryan/].")
+	assert.EqualError(t, command, "Project already exists at ["+goPath+"/src/github.com/nickbryan/testapp"+"].")
 }
 
 func TestSkeletonIsCopiedToPathIfNoError(t *testing.T) {
-	os.Setenv("GOPATH", goPath)
 	base := afero.NewOsFs()
 	roBase := afero.NewReadOnlyFs(base)
 	filesystem := afero.NewCopyOnWriteFs(roBase, afero.NewMemMapFs())

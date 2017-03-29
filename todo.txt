@@ -6,6 +6,8 @@ General
 Commands
     New
         * Need to figure out why filesystem stat gets file not exists on mac https://github.com/spf13/afero/issues/115
+        * Consider switching to https://github.com/blang/vfs
+        * Need a way to handle multiple go paths
 
 Tests
 * Add messages to boolean checks etc.
