@@ -1,9 +1,0 @@
-mode: set
-github.com/nickbryan/gimli/foundation/providers/config.go:14.66,25.2 6 1
-github.com/nickbryan/gimli/foundation/providers/config.go:27.100,31.29 3 1
-github.com/nickbryan/gimli/foundation/providers/config.go:31.29,39.57 6 1
-github.com/nickbryan/gimli/foundation/providers/config.go:39.57,41.4 1 1
-github.com/nickbryan/gimli/foundation/providers/config.go:45.26,46.14 1 1
-github.com/nickbryan/gimli/foundation/providers/config.go:46.14,47.11 1 0
-github.com/nickbryan/gimli/foundation/providers/routing.go:10.60,11.68 1 1
-github.com/nickbryan/gimli/foundation/providers/routing.go:11.68,13.3 1 1
