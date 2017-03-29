@@ -70,7 +70,11 @@ func (command *newCommand) replaceInFile(filePath, text, replace string) {
 	if err != nil {
 		panic(err)
 	}
-	defer file.Close()
+	defer func() {
+		if err = file.Close(); err != nil {
+			panic(err)
+		}
+	}()
 
 	read, err := ioutil.ReadAll(file)
 	if err != nil {
@@ -134,7 +138,11 @@ func (command *newCommand) copyFile(src, dst string) (err error) {
 	if err != nil {
 		return
 	}
-	defer in.Close()
+	defer func() {
+		if e := in.Close(); e != nil {
+			err = e
+		}
+	}()
 
 	out, err := command.filesystem.Create(dst)
 	if err != nil {
