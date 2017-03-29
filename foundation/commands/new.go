@@ -18,7 +18,7 @@ type newCommand struct {
 	filesystem afero.Fs
 }
 
-func New(path string, filesystem afero.Fs) Runner {
+func New(path string, filesystem afero.Fs) *newCommand {
 	n := &newCommand{
 		path: path,
 	}
@@ -66,43 +66,47 @@ func (command *newCommand) replacePaths(dir string) (err error) {
 }
 
 func (command *newCommand) replaceInFile(filePath, text, replace string) {
-	file, err := command.filesystem.OpenFile(filePath, os.O_RDWR, os.ModePerm)
+	file, err := command.filesystem.Open(filePath)
 	if err != nil {
 		panic(err)
 	}
 	defer file.Close()
 
-	read, err := ioutil.ReadFile(filePath)
+	read, err := ioutil.ReadAll(file)
 	if err != nil {
 		panic(err)
 	}
 
 	newContents := strings.Replace(string(read), text, replace, -1)
 
-	file.Truncate(0)
+	file, err = command.filesystem.Create(filePath)
+	if err != nil {
+		panic(err)
+	}
+
 	_, err = file.Write([]byte(newContents))
 	if err != nil {
 		panic(err)
 	}
 }
 
-func (command *newCommand) copyDir(src string, dst string) error {
+func (command *newCommand) copyDir(src string, dst string) (err error) {
 	src = filepath.Clean(src)
 	dst = filepath.Clean(dst)
 
 	si, err := os.Stat(src)
 	if err != nil {
-		return err
+		return
 	}
 
 	err = command.filesystem.MkdirAll(dst, si.Mode())
 	if err != nil {
-		return nil
+		return
 	}
 
 	entries, err := ioutil.ReadDir(src)
 	if err != nil {
-		return nil
+		return
 	}
 
 	for _, entry := range entries {
@@ -112,29 +116,29 @@ func (command *newCommand) copyDir(src string, dst string) error {
 		if entry.IsDir() {
 			err = command.copyDir(srcPath, dstPath)
 			if err != nil {
-				return nil
+				return
 			}
 		} else {
 			err = command.copyFile(srcPath, dstPath)
 			if err != nil {
-				return nil
+				return
 			}
 		}
 	}
 
-	return nil
+	return
 }
 
-func (command *newCommand) copyFile(src, dst string) error {
+func (command *newCommand) copyFile(src, dst string) (err error) {
 	in, err := command.filesystem.Open(src)
 	if err != nil {
-		return nil
+		return
 	}
 	defer in.Close()
 
 	out, err := command.filesystem.Create(dst)
 	if err != nil {
-		return nil
+		return
 	}
 	defer func() {
 		if e := out.Close(); e != nil {
@@ -144,22 +148,22 @@ func (command *newCommand) copyFile(src, dst string) error {
 
 	_, err = io.Copy(out, in)
 	if err != nil {
-		return nil
+		return
 	}
 
 	err = out.Sync()
 	if err != nil {
-		return nil
+		return
 	}
 
 	si, err := os.Stat(src)
 	if err != nil {
-		return nil
+		return
 	}
 	err = command.filesystem.Chmod(dst, si.Mode())
 	if err != nil {
-		return nil
+		return
 	}
 
-	return nil
+	return
 }

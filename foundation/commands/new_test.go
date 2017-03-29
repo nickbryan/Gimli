@@ -10,18 +10,21 @@ import (
 
 var goPath = os.Getenv("GOPATH")
 
-// Test default fs is set
+func TestDefaultFileSystemIsSetWhenPassedAsNil(t *testing.T) {
+	command := New("github.com/nickbryan/testapp", nil)
+	assert.Equal(t, afero.NewOsFs(), command.filesystem)
+}
 
 func TestErrorIsReturnedIfProjectAlreadyExists(t *testing.T) {
 	filesystem := afero.NewMemMapFs()
 
 	err := filesystem.MkdirAll(goPath+"/src/github.com/nickbryan/testapp", os.ModePerm)
 	if err != nil {
-		panic(err)
+		assert.FailNow(t, err.Error())
 	}
 
-	command := New("github.com/nickbryan/testapp", filesystem).Run()
-	assert.EqualError(t, command, "Project already exists at ["+goPath+"/src/github.com/nickbryan/testapp"+"].")
+	err = New("github.com/nickbryan/testapp", filesystem).Run()
+	assert.EqualError(t, err, "Project already exists at ["+goPath+"/src/github.com/nickbryan/testapp"+"].")
 }
 
 func TestSkeletonIsCopiedToPathIfNoError(t *testing.T) {
@@ -30,8 +33,8 @@ func TestSkeletonIsCopiedToPathIfNoError(t *testing.T) {
 	filesystem := afero.NewCopyOnWriteFs(roBase, afero.NewMemMapFs())
 	path := goPath + "/src/github.com/nickbryan/testapp"
 
-	command := New("github.com/nickbryan/testapp", filesystem).Run()
-	assert.Nil(t, command)
+	err := New("github.com/nickbryan/testapp", filesystem).Run()
+	assert.Nil(t, err)
 
 	ok, _ := afero.DirExists(filesystem, path)
 	assert.True(t, ok, "Skeleton has not been copied to path")
