@@ -11,6 +11,14 @@ type Router interface {
 
 	Dispatch(response http.ResponseWriter, request *http.Request)
 	SetNotFoundHandler(handler http.Handler)
+
+	Get(path string, handler http.Handler)
+	Post(path string, handler http.Handler)
+	Put(path string, handler http.Handler)
+	Patch(path string, handler http.Handler)
+	Delete(path string, handler http.Handler)
+	Any(path string, handler http.Handler)
+	Match(path string, handler http.Handler, methods ...string)
 }
 
 type router struct {
@@ -63,4 +71,41 @@ func (r *router) Dispatch(response http.ResponseWriter, request *http.Request) {
 // by default.
 func (r *router) SetNotFoundHandler(handler http.Handler) {
 	r.notFoundHandler = handler
+}
+
+// Get is a helper that adds a route to the collection that will match the request the method GET.
+func (r *router) Get(path string, handler http.Handler) {
+	r.collection.Add(NewRoute(path, []string{http.MethodGet}, handler))
+}
+
+// Post is a helper that adds a route to the collection that will match the request the method POST.
+func (r *router) Post(path string, handler http.Handler) {
+	r.collection.Add(NewRoute(path, []string{http.MethodPost}, handler))
+}
+
+// Put is a helper that adds a route to the collection that will match the request the method PUT.
+func (r *router) Put(path string, handler http.Handler) {
+	r.collection.Add(NewRoute(path, []string{http.MethodPut}, handler))
+}
+
+// Patch is a helper that adds a route to the collection that will match the request the method PATCH.
+func (r *router) Patch(path string, handler http.Handler) {
+	r.collection.Add(NewRoute(path, []string{http.MethodPatch}, handler))
+}
+
+// Delete is a helper that adds a route to the collection that will match the request method DELETE.
+func (r *router) Delete(path string, handler http.Handler) {
+	r.collection.Add(NewRoute(path, []string{http.MethodDelete}, handler))
+}
+
+// Any is a helper that adds a route to the collection that will match any request method.
+func (r *router) Any(path string, handler http.Handler) {
+	methods := []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodPatch, http.MethodDelete}
+
+	r.collection.Add(NewRoute(path, methods, handler))
+}
+
+// Match is a helper that adds a route to the collection that will match the given request methods.
+func (r *router) Match(path string, handler http.Handler, methods ...string) {
+	r.collection.Add(NewRoute(path, methods, handler))
 }
