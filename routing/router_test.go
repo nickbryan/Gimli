@@ -43,6 +43,21 @@ func TestCustomNotFoundHandlerCanBeSet(t *testing.T) {
 	assert.Contains(t, response.Body.String(), "This is the custom text")
 }
 
+func TestStatusOKIsReturnedByDefault(t *testing.T) {
+	routeCollection := NewRouteCollection()
+	routeCollection.Add(NewRoute("/test", nil, http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+		rw.Write([]byte("The Handler Was Called!"))
+	})))
+
+	router := NewRouterFromCollection(routeCollection)
+
+	response := httptest.NewRecorder()
+	request := httptest.NewRequest("", "/test", nil)
+
+	router.Dispatch(response, request)
+	assert.Equal(t, http.StatusOK, response.Code)
+}
+
 func TestRouteHandlerIsCalledWhenRouteIsMatched(t *testing.T) {
 	routeCollection := NewRouteCollection()
 	routeCollection.Add(NewRoute("/test", nil, http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
@@ -92,4 +107,63 @@ func TestIfMultipleRoutesMatchedTheFirstFoundIsReturned(t *testing.T) {
 
 	router.Dispatch(response, request)
 	assert.Contains(t, response.Body.String(), "The Handler For Route1 Was Called!")
+}
+
+func TestRequestMethodHelperFunctions(t *testing.T) {
+	router := NewRouter()
+
+	router.Get("", http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+		rw.Write([]byte("The GET handler was called."))
+	}))
+
+	router.Post("", http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+		rw.Write([]byte("The POST handler was called."))
+	}))
+
+	router.Put("", http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+		rw.Write([]byte("The PUT handler was called."))
+	}))
+
+	router.Patch("", http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+		rw.Write([]byte("The PATCH handler was called."))
+	}))
+
+	router.Delete("", http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+		rw.Write([]byte("The DELETE handler was called."))
+	}))
+
+	router.Any("/any", http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+		rw.Write([]byte("The Any handler was called."))
+	}))
+
+	router.Match("/match", http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+		rw.Write([]byte("The Match handler was called."))
+	}), http.MethodGet, http.MethodPost, http.MethodPut, http.MethodPatch, http.MethodDelete)
+
+	assert.Contains(t, runRequest(http.MethodGet, "/", router), "The GET handler was called.")
+	assert.Contains(t, runRequest(http.MethodPost, "/", router), "The POST handler was called.")
+	assert.Contains(t, runRequest(http.MethodPut, "/", router), "The PUT handler was called.")
+	assert.Contains(t, runRequest(http.MethodPatch, "/", router), "The PATCH handler was called.")
+	assert.Contains(t, runRequest(http.MethodDelete, "/", router), "The DELETE handler was called.")
+
+	assert.Contains(t, runRequest(http.MethodGet, "/any", router), "The Any handler was called.")
+	assert.Contains(t, runRequest(http.MethodPost, "/any", router), "The Any handler was called.")
+	assert.Contains(t, runRequest(http.MethodPut, "/any", router), "The Any handler was called.")
+	assert.Contains(t, runRequest(http.MethodPatch, "/any", router), "The Any handler was called.")
+	assert.Contains(t, runRequest(http.MethodDelete, "/any", router), "The Any handler was called.")
+
+	assert.Contains(t, runRequest(http.MethodGet, "/match", router), "The Match handler was called.")
+	assert.Contains(t, runRequest(http.MethodPost, "/match", router), "The Match handler was called.")
+	assert.Contains(t, runRequest(http.MethodPut, "/match", router), "The Match handler was called.")
+	assert.Contains(t, runRequest(http.MethodPatch, "/match", router), "The Match handler was called.")
+	assert.Contains(t, runRequest(http.MethodDelete, "/match", router), "The Match handler was called.")
+}
+
+func runRequest(method, path string, router Router) string {
+	response := httptest.NewRecorder()
+	request := httptest.NewRequest(method, path, nil)
+
+	router.Dispatch(response, request)
+
+	return response.Body.String()
 }
