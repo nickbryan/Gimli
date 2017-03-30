@@ -3,11 +3,15 @@ General
 * Improve api documentation and check against go doc.
 * Add doc.go for each package.
 
+Skeleton
+* Make a nicer example.
+
 Commands
     New
         * Need to figure out why filesystem stat gets file not exists on mac https://github.com/spf13/afero/issues/115
         * Consider switching to https://github.com/blang/vfs
         * Need a way to handle multiple go paths
+        * Check command usage documentation
 
 Tests
 * Add messages to boolean checks etc.
