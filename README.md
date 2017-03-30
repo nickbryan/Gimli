@@ -1,4 +1,8 @@
 # Gimli - A Go Web Application Framework
+
+[![Build Status](https://travis-ci.org/nickbryan/gimli.svg?branch=master)](https://travis-ci.org/nickbryan/gimli)
+[![Coverage Status](https://coveralls.io/repos/github/nickbryan/gimli/badge.svg?branch=master)](https://coveralls.io/github/nickbryan/gimli?branch=master)
+
 Gimli is a web application for the Go language. It aims to be simple and clean, 
 taking inspiration from web frameworks across many languages. 
 
