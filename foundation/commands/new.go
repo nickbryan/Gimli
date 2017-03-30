@@ -60,6 +60,10 @@ func (command *newCommand) replacePaths(dir string) (err error) {
 
 	command.replaceInFile(dir+"/main.go", "github.com/nickbryan/gimli/foundation/skeleton", command.path)
 	command.replaceInFile(dir+"/bootstrap/routes.go", "github.com/nickbryan/gimli/foundation/skeleton", command.path)
+	command.replaceInFile(dir+"/bootstrap/providers.go", "github.com/nickbryan/gimli/foundation/skeleton", command.path)
+	command.replaceInFile(dir+"/app/controllers/welcome.go", "github.com/nickbryan/gimli/foundation/skeleton", command.path)
+	command.replaceInFile(dir+"/app/providers/controller.go", "github.com/nickbryan/gimli/foundation/skeleton", command.path)
+
 	command.replaceInFile(dir+"/bootstrap/bootstrap.go", "/home/mifdev/go/src/github.com/nickbryan/gimli/foundation/skeleton", dir)
 
 	return

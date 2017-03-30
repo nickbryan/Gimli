@@ -1,13 +1,18 @@
 package bootstrap
 
 import (
+	"net/http"
+
 	"github.com/nickbryan/gimli/di"
-	"github.com/nickbryan/gimli/foundation/skeleton/app"
+	"github.com/nickbryan/gimli/foundation/skeleton/app/controllers"
 	"github.com/nickbryan/gimli/routing"
 )
 
 func init() {
-	router := di.GetInstance().MustResolve("router").(routing.Router)
+	container := di.GetInstance()
+	router := container.MustResolve("router").(routing.Router)
 
-	router.Get("/", &app.WelcomeHandler{"Welcome to the Gimli Framework!"})
+	router.Get("/", http.HandlerFunc(
+		container.MustResolve("controllers.welcome").(*controllers.WelcomeController).Welcome,
+	))
 }
