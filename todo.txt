@@ -15,6 +15,7 @@ Tests
 Providers
 * Config
     * Cash config in the same way laravels service provider does.
+    * Test environment set
 
 Router
 * Decide on how named routes should be handled when another route is added with the same name, this also includes

@@ -11,6 +11,8 @@ import (
 	"github.com/nickbryan/gimli/routing"
 )
 
+const VERSION = "0.1.0"
+
 type Application interface {
 	Container() di.Container
 	Run()
