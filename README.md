@@ -1,5 +1,6 @@
-# Gimli
-An inspired web framework written in Go.
+# Gimli - A Go Web Application Framework
+Gimli is a web application for the Go language. It aims to be simple and clean, 
+taking inspiration from web frameworks across many languages. 
 
 **Note:** *Gimli is currently in development and should not be used in production.*
 
