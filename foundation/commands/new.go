@@ -18,6 +18,7 @@ type newCommand struct {
 	filesystem afero.Fs
 }
 
+// New creates a new application skeleton at the desired path.
 func New(path string, filesystem afero.Fs) *newCommand {
 	n := &newCommand{
 		path: path,
@@ -31,6 +32,7 @@ func New(path string, filesystem afero.Fs) *newCommand {
 	return n
 }
 
+// Run the command.
 func (command *newCommand) Run() error {
 	goPath := strings.TrimRight(os.Getenv("GOPATH"), "/") + "/"
 	projectPath := goPath + "src/" + command.path

@@ -9,8 +9,10 @@ import (
 	"github.com/nickbryan/gimli/di"
 )
 
+// ConfigurationProvider sets the config in the container.
 type ConfigurationProvider struct{}
 
+// Register the config repository in the container and load configurations from the config path.
 func (p *ConfigurationProvider) Register(container di.Container) {
 	items := map[string]interface{}{}
 	configPath := container.MustResolve("path.config")

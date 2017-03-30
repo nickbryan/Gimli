@@ -11,8 +11,11 @@ import (
 	"github.com/nickbryan/gimli/routing"
 )
 
+// VERSION of the application.
 const VERSION = "0.1.0"
 
+// Application is the heart of the Gimli framework. It is responsible for all bootstrapping and general
+// functionality.
 type Application interface {
 	Container() di.Container
 	Run()
@@ -33,6 +36,8 @@ type application struct {
 	basePath  string
 }
 
+// NewApplication creates a new Application instance, set the relevant paths in the container and
+// register base bindings and providers.
 func NewApplication(basePath string) Application {
 	app := &application{
 		container: di.NewContainer(),
@@ -46,6 +51,8 @@ func NewApplication(basePath string) Application {
 	return app
 }
 
+// Run starts a http server running by calling http.ListenAndServe. It uses the host and port
+// set in the app.json config.
 func (app *application) Run() {
 	conf := app.container.MustResolve("config").(*config.Repository)
 	host, port := conf.Get("host").(string), conf.Get("port").(string)
@@ -68,29 +75,36 @@ func (app *application) Container() di.Container {
 	return app.container
 }
 
+// SetBasePath sets the application base path and registers all other application paths
+// in the container.
 func (app *application) SetBasePath(basePath string) {
-	// Test path.clean
+	// TODO: Test path.clean
 	app.basePath = strings.TrimRight(basePath, `\/`)
 
 	app.bindPathsInContainer()
 }
 
+// BasePath is the path to the root of the application.
 func (app *application) BasePath() string {
 	return app.basePath
 }
 
+// BootstrapPath is the path to the bootstrap package.
 func (app *application) BootstrapPath() string {
 	return app.basePath + string(filepath.Separator) + "bootstrap"
 }
 
+// BootstrapPath is the path to the config directory.
 func (app *application) ConfigPath() string {
 	return app.basePath + string(filepath.Separator) + "config"
 }
 
+// Path is the path to the app package.
 func (app *application) Path() string {
 	return app.basePath + string(filepath.Separator) + "app"
 }
 
+// PublicPath is the path to the public directory.
 func (app *application) PublicPath() string {
 	return app.basePath + string(filepath.Separator) + "public"
 }
@@ -103,10 +117,12 @@ func (app *application) bindPathsInContainer() {
 	app.container.Instance("path.public", app.PublicPath())
 }
 
+// Environment will indicate the current environment.
 func (app *application) Environment() string {
 	return app.container.MustResolve("env").(string)
 }
 
+// IsEnvironment can be used to check for a specific environment.
 func (app *application) IsEnvironment(env string) bool {
 	return app.Environment() == env
 }
