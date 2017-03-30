@@ -1,0 +1,42 @@
+General
+* Improve readme file.
+* Improve api documentation and check against go doc.
+* Add doc.go for each package.
+
+Skeleton
+* Make a nicer example.
+
+Commands
+    New
+        * Need to figure out why filesystem stat gets file not exists on mac https://github.com/spf13/afero/issues/115
+        * Consider switching to https://github.com/blang/vfs
+        * Need a way to handle multiple go paths
+        * Check command usage documentation
+
+Tests
+* Add messages to boolean checks etc.
+
+Providers
+* Config
+    * Cash config in the same way laravels service provider does.
+    * Test environment set
+
+Router
+* Decide on how named routes should be handled when another route is added with the same name, this also includes
+refreshing of named route list. Should it panic, overwrite(update) route, return an error string? Should it still be added
+to all routes/trie?
+* Possible abstract trie to separate interfaces, RouteAdder - RouteSearcher - RouteAdderSearcher?
+* Add has method for collection to check if route exists, will also need a compare method on route so that slices in
+routes can be checked for equality. See https://play.golang.org/p/J48Jz51C73 and https://play.golang.org/p/mzvvoksjDq
+* Decide what to do about nil route handlers.
+* Add static file routing.
+* Add method not allowed when routes are found but methods don't match (http.Error(rw, "Method Not Allowed", 405)).
+    	// TODO: add css, js, img etc
+    	if url == "/favicon.ico" || url == "/robots.txt" {
+    		//file := config.PublicPath + url
+    		//http.ServeFile(response, request, file)
+    		return
+    	}
+* Add controllers.
+* Array unique Match request methods.
+* Could TestStatusOKIsReturnedByDefault be removed in router due to testing go's response default?
