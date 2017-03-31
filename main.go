@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/nickbryan/gimli/foundation"
 	"github.com/nickbryan/gimli/foundation/commands"
 	"github.com/urfave/cli"
 )
@@ -14,7 +15,7 @@ func main() {
 	app.Name = "gimli"
 	app.Usage = "A cli utility for managing gimli applications"
 	app.Description = "The gimli cli tool should be used to aid in the development of applications using the gimli framework."
-	app.Version = "0.1.0"
+	app.Version = foundation.VERSION
 	app.Author = "Nick Bryan"
 
 	app.Commands = []cli.Command{

@@ -12,7 +12,7 @@ import (
 )
 
 // VERSION of the application.
-const VERSION = "0.1.0"
+const VERSION = "0.1.1"
 
 // Application is the heart of the Gimli framework. It is responsible for all bootstrapping and general
 // functionality.
