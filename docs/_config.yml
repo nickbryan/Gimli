@@ -1,0 +1,18 @@
+title: Gimli
+email: nickbryan.dev@gmail.com
+description: >
+  A web application framework for the Go language.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+twitter_username: iamnickbryan
+github_username:  nickbryan
+
+# Build settings
+markdown: kramdown
+theme: jekyll-theme-midnight
+gems:
+  - jekyll-feed
+exclude:
+  - Gemfile
+  - Gemfile.lock
+doc_version: 0.1
