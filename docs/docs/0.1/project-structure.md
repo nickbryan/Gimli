@@ -13,6 +13,8 @@ title: Project Structure
 
 <a class="anchor" id="introduction"></a>
 ## Introduction
+***Note: Most of this documentation presumes you are working form a new skeleton application.***
+
 Gimli aims to provide a solid foundation for getting started with a new project by providing a skeleton 
 application out of the box. You can [read more on creating a new skeleton project](/docs/0.1/installation#creating-a-project) 
 in the installation section. This skeleton is just a starting point so feel free to customise it however you like.
