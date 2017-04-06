@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	container := di.GetInstance()
+	container := Application.Container()
 	router := container.MustResolve("router").(routing.Router)
 
 	router.Get("/", http.HandlerFunc(

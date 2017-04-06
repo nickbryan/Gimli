@@ -6,7 +6,7 @@ import (
 )
 
 func init() {
-	container := di.GetInstance()
+	container := Application.Container()
 
 	container.Register(&providers.ControllerServiceProvider{})
 }
