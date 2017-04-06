@@ -3,7 +3,6 @@ package bootstrap
 import (
 	"net/http"
 
-	"github.com/nickbryan/gimli/di"
 	"github.com/nickbryan/gimli/foundation/skeleton/app/controllers"
 	"github.com/nickbryan/gimli/routing"
 )
