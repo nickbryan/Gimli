@@ -1,6 +1,15 @@
 ---
-# Only the main Sass file needs front matter (the dashes are enough)
+
 ---
+
+ul > .doc-nav-heading:not(:first-child) {
+    margin-top: 20px;
+}
+
+.doc-nav-heading {
+    margin-left: -20px;
+    list-style: none;
+}
 
 a.anchor {
     display: block;
@@ -17,24 +26,23 @@ a.anchor {
     margin-top: -10px;
 }
 
-.wrapper {
-    max-width: 850px;
+.docs.wrapper {
+    max-width: 1050px;
 }
 
 .documentation-nav {
     float: left;
-    max-width: 200px;
-    position: relative;
+    width: 200px;
     position: relative;
     top: 120px;
 }
 
 .content-section {
-    float: right;
+    float: left;
 }
 
 .content-section > section {
-    max-width: 650px;
+    max-width: 850px;
 }
 
 section #title {
