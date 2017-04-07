@@ -2,10 +2,10 @@ package routing
 
 import (
 	"net/http"
+	"net/http/httptest"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"net/http/httptest"
 )
 
 func TestNewRouteSetsParamsAsExpected(t *testing.T) {
@@ -72,4 +72,9 @@ func TestMethodMatcherIsSetByDefault(t *testing.T) {
 
 	request = httptest.NewRequest(http.MethodPost, "/", nil)
 	assert.False(t, r.Matches(request))
+}
+
+func TestSlashesAreRemovedFromEndOfPathWhenSet(t *testing.T) {
+	r := NewRoute("test/", nil, nil)
+	assert.Equal(t, "/test", r.Path())
 }

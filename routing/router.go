@@ -19,6 +19,7 @@ type Router interface {
 	Delete(path string, handler http.Handler)
 	Any(path string, handler http.Handler)
 	Match(path string, handler http.Handler, methods ...string)
+	Group(prefix string, group func(router Router))
 }
 
 type router struct {
@@ -51,11 +52,9 @@ func (r *router) ServeHTTP(response http.ResponseWriter, request *http.Request) 
 func (r *router) Dispatch(response http.ResponseWriter, request *http.Request) {
 	url := path.Clean(request.URL.Path)
 
-	routeCollection := r.collection.RoutesByPath(url)
-
 	handler := r.notFoundHandler
 
-	if len(routeCollection.Routes) > 0 {
+	if routeCollection := r.collection.RoutesByPath(url); routeCollection != nil {
 		for _, route := range routeCollection.Routes {
 			if route.Matches(request) {
 				handler = route.handler
@@ -108,4 +107,14 @@ func (r *router) Any(path string, handler http.Handler) {
 // Match is a helper that adds a route to the collection that will match the given request methods.
 func (r *router) Match(path string, handler http.Handler, methods ...string) {
 	r.collection.Add(NewRoute(path, methods, handler))
+}
+
+func (r *router) Group(prefix string, group func(router Router)) {
+	routeCollection := NewRouteCollection()
+
+	group(NewRouterFromCollection(routeCollection))
+
+	routeCollection.Prefix(prefix)
+
+	r.collection.AddCollection(routeCollection)
 }

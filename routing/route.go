@@ -2,6 +2,7 @@ package routing
 
 import (
 	"net/http"
+	pkgPath "path"
 	"strings"
 )
 
@@ -40,7 +41,7 @@ func (r *Route) Path() string {
 
 // SetPath will normalise and set the pattern used to match the route.
 func (r *Route) SetPath(path string) {
-	r.path = "/" + strings.TrimLeft(strings.TrimSpace(path), "/")
+	r.path = pkgPath.Clean("/" + strings.TrimLeft(strings.TrimSpace(path), "/"))
 }
 
 // Methods will return a list of request methods that this route will respond to.

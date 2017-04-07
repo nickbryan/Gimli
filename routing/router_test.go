@@ -159,6 +159,30 @@ func TestRequestMethodHelperFunctions(t *testing.T) {
 	assert.Contains(t, runRequest(http.MethodDelete, "/match", router), "The Match handler was called.")
 }
 
+func TestRouterCanGroupRoutesByPrefix(t *testing.T) {
+	router := NewRouter()
+
+	router.Get("test", http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+		rw.Write([]byte("The not grouped test handler was called."))
+	}))
+
+	router.Group("prefix", func(router Router) {
+
+		router.Get("/", http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+			rw.Write([]byte("The prefix base handler was called."))
+		}))
+
+		router.Get("test", http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+			rw.Write([]byte("The prefix test handler was called."))
+		}))
+
+	})
+
+	assert.Contains(t, runRequest(http.MethodGet, "/test", router), "The not grouped test handler was called.")
+	assert.Contains(t, runRequest(http.MethodGet, "/prefix", router), "The prefix base handler was called.")
+	assert.Contains(t, runRequest(http.MethodGet, "/prefix/test", router), "The prefix test handler was called.")
+}
+
 func runRequest(method, path string, router Router) string {
 	response := httptest.NewRecorder()
 	request := httptest.NewRequest(method, path, nil)

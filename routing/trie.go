@@ -89,6 +89,10 @@ func (t *trie) add(route *Route) {
 // search will traverse the trie looking for a match to the path.
 // If nothing is found it will return (nil, map[string]string{}).
 func (t *trie) search(path string) ([]*Route, map[string]string) {
+	if path[0] != '/' {
+		path = "/" + path
+	}
+
 	params := map[string]string{}
 
 	node, _ := t.traverse(strings.Split(path, "/")[1:], params)

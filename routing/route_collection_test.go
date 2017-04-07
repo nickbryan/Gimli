@@ -84,3 +84,40 @@ func TestCountReturnsNumberOfRoutesInCollection(t *testing.T) {
 
 	assert.Equal(t, 3, rc.Count())
 }
+
+func TestRoutesByPathReturnsNilIfNoRoutesFound(t *testing.T) {
+	rc := NewRouteCollection()
+
+	assert.Nil(t, rc.RoutesByPath("some/test/route"))
+}
+
+func TestPrefixCanBeAddedToAllRoutesInCollection(t *testing.T) {
+	rc := NewRouteCollection()
+
+	routeA := NewRoute("/a", nil, nil)
+	routeB := NewRoute("/b", nil, nil)
+	rc.Add(routeA)
+	rc.Add(routeB)
+
+	rc.Prefix("prefix")
+
+	assert.Equal(t, routeA, rc.RoutesByPath("/prefix/a").Routes[0])
+	assert.Equal(t, routeB, rc.RoutesByPath("/prefix/b").Routes[0])
+}
+
+func TestCollectionsCanBeAddedToCollections(t *testing.T) {
+	rc1 := NewRouteCollection()
+	rc1.Add(NewRoute("/a", nil, nil))
+	rc1.Add(NewRoute("/b", nil, nil))
+
+	rc2 := NewRouteCollection()
+	rc2.Add(NewRoute("/c", nil, nil))
+	rc2.Add(NewRoute("/d", nil, nil))
+
+	rc1.AddCollection(rc2)
+
+	assert.NotNil(t, rc1.RoutesByPath("/a"))
+	assert.NotNil(t, rc1.RoutesByPath("/b"))
+	assert.NotNil(t, rc1.RoutesByPath("/c"))
+	assert.NotNil(t, rc1.RoutesByPath("/d"))
+}

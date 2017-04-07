@@ -44,6 +44,10 @@ func (collection *RouteCollection) RouteByName(name string) *Route {
 func (collection *RouteCollection) RoutesByPath(path string) *RouteMatchGroup {
 	routes, params := collection.routes.search(path)
 
+	if len(routes) == 0 {
+		return nil
+	}
+
 	return &RouteMatchGroup{routes, params}
 }
 
@@ -62,4 +66,28 @@ func (collection *RouteCollection) RefreshNamedRoutes() {
 // Count will return the total number of routes in the collection.
 func (collection *RouteCollection) Count() int {
 	return len(collection.allRoutes)
+}
+
+func (collection *RouteCollection) Prefix(prefix string) {
+	if prefix == "" {
+		return
+	}
+
+	collection.routes = newRouteTrie()
+
+	for _, route := range collection.allRoutes {
+		route.SetPath(prefix + route.Path())
+
+		collection.Add(route)
+	}
+}
+
+func (collection *RouteCollection) AllRoutes() []*Route {
+	return collection.allRoutes
+}
+
+func (collection *RouteCollection) AddCollection(routeCollection *RouteCollection) {
+	for _, route := range routeCollection.AllRoutes() {
+		collection.Add(route)
+	}
 }

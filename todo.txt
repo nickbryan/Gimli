@@ -26,7 +26,7 @@ Router
 refreshing of named route list. Should it panic, overwrite(update) route, return an error string? Should it still be added
 to all routes/trie?
 * Possible abstract trie to separate interfaces, RouteAdder - RouteSearcher - RouteAdderSearcher?
-* Add has method for collection to check if route exists, will also need a compare method on route so that slices in
+* Add "Has" method for collection to check if route exists, will also need a compare method on route so that slices in
 routes can be checked for equality. See https://play.golang.org/p/J48Jz51C73 and https://play.golang.org/p/mzvvoksjDq
 * Decide what to do about nil route handlers.
 * Add static file routing.
@@ -40,3 +40,5 @@ routes can be checked for equality. See https://play.golang.org/p/J48Jz51C73 and
 * Add controllers.
 * Array unique Match request methods.
 * Could TestStatusOKIsReturnedByDefault be removed in router due to testing go's response default?
+* Look at improving prefix method, possible update in trie instead of rebuilding trie. will this actually gain anything?
+* Test group prefix with params.

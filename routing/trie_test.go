@@ -71,3 +71,13 @@ func TestNamedParamsAreReturnedWhenRoutesAreFound(t *testing.T) {
 	_, params := trie.search("/path/to/route/nick/with/123")
 	assert.Equal(t, map[string]string{"name": "nick", "id": "123"}, params)
 }
+
+func TestSearchCanHandleAPathThatStartsWithoutASlash(t *testing.T) {
+	trie := newRouteTrie()
+
+	route := NewRoute("/path/to/route", nil, nil)
+	trie.add(route)
+
+	routes, _ := trie.search("path/to/route")
+	assert.Equal(t, route, routes[0])
+}
