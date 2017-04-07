@@ -7,6 +7,7 @@ Skeleton
 * Make a nicer example.
 
 Commands
+* Consider switching to cobra.
     New
         * Need to figure out why filesystem stat gets file not exists on mac https://github.com/spf13/afero/issues/115
         * Consider switching to https://github.com/blang/vfs
@@ -18,7 +19,6 @@ Tests
 
 Providers
 * Config
-    * Cash config in the same way laravels service provider does.
     * Test environment set
 
 Router
