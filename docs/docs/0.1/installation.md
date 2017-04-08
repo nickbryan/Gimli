@@ -2,13 +2,11 @@
 layout: documentation
 title: Installation
 ---
-<a class="anchor" id="installation"></a>
 # Installation
 
-- [Installation](#installation)
-    - [Server Requirements](#server-requirements)
-    - [Installing Gimli](#installing-gimli)
-    - [Creating a Project](#creating-a-project)
+- [Server Requirements](#server-requirements)
+- [Installing Gimli](#installing-gimli)
+- [Creating a Project](#creating-a-project)
 
 <a class="anchor" id="server-requirements"></a>
 ### Server Requirements
