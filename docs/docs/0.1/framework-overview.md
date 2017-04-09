@@ -10,7 +10,7 @@ title: Framework Overview
 
 <a class="anchor" id="introduction"></a>
 ## Introduction
-It is a good idea to get familiar with whats happening underneath the public interface of a framework before you dive
+It is a good idea to get familiar with whats happening behind the public interface of a framework before you dive
 into using it. This section of the documentation aims to provide a high level overview of how Gimli was put together and 
 what happens during the lifecycle of a request.
 
