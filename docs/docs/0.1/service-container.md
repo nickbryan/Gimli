@@ -5,7 +5,7 @@ title: Service Container
 # Service Container
 
 - [Introduction](#introduction)
-- [Service Providers](#service-provider)
+- [Service Providers](#service-providers)
 - [Binding](#binding)
 - [Resolving](#resolving)
 
@@ -79,7 +79,7 @@ providers in the `bootstrap/providers.go` file.
 <a class="anchor" id="binding"></a>
 ## Binding
 ### Bind
-The most common way to bind a service on the container is to use the `bind` method. The first parameter should be a string 
+The most common way to bind a service on the container is to use the `Bind` method. The first parameter should be a string 
 that represents the nature of the service; used to resolve the service later. The second parameter should be a closure that 
 takes the container as its only parameter and returns an instance of the service.
 ```go 
@@ -95,9 +95,77 @@ bound in the container.
 When a service is bound in the container via bind, the same instance of the service will be returned on each resolution.
 
 ### Instance
+You can add an existing object instance into the container via the `Instance` method. Once bound, resolving will always 
+return the same instance:
+```go
+notifier := NewNotifier()
+container.Instance("Notifier", notifier)
+```
 ### Factory
+As mentioned above, values are shared by default when bound to the container. Sometimes you may want a new instance of 
+an object on each resolution. This can be achieved with the `Factory` method:
+```go
+container.Factory("SessionStore", func(container di.Container) interface{} {
+        return NewSessionStorage()
+})
+```
 
 <a class="anchor" id="resloving"></a>
 ## Resolving
 ### Resolve
+Once a value has been bound to the container you can retrieve it via the `Resolve` method. The requested value and `nil` 
+will be returned if the value exists in the container, otherwise `nil` and an `error` will be returned:
+```go
+package yours
+
+import . "github.com/nickbryan/gimli/di"
+
+func main() {
+        container := NewContainer()
+      
+        container.Instance("TheMeaningOfLife", 42)
+  
+        val, err := container.Resolve("TheMeaningOfLife")
+        if err != nil {
+                panic(err)
+        }
+    
+        println("The meaning of life is: " + val.(string))
+}
+```
+
 ### MustResolve
+There is a short hand way of resolving from the container using `MustResolve`. If the value does not exist, `MustResolve` 
+will `panic`. You can use this as follows:
+```go
+package yours
+
+import . "github.com/nickbryan/gimli/di"
+
+func main() {
+        container := NewContainer()
+      
+        container.Instance("TheMeaningOfLife", 42)
+    
+        println("The meaning of life is: " + container.MustResolve("TheMeaningOfLife").(string))
+}
+```
+
+Or you could catch the panic as follows:
+```go
+package yours
+
+import . "github.com/nickbryan/gimli/di"
+
+func main() {
+        defer func() {
+                if r := recover(); r != nil {
+                    println("Recovered from panic", r)
+                }
+        }()
+
+        container := NewContainer()
+        
+        println("The meaning of life is: " + container.MustResolve("TheMeaningOfLife").(string))
+}
+```
