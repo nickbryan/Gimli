@@ -3,7 +3,6 @@ languageCode = "en-gb"
 title = "Gimli"
 pygmentsstyle = "autumn"
 theme = "hugo-material-docs"
-canonifyURLs = true
 
 [params]
 	# General information
