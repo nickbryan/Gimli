@@ -1,19 +1,23 @@
----
-layout: documentation
-title: Installation
----
-# Installation
++++
+date = "2017-04-03T20:46:58+01:00"
+draft = false 
+title = "Installation"
+[menu.main]
+  parent = "Getting Started"
+  identifier = "docs/0.1/getting-started/installation"
+  weight = -10
++++
 
 - [Server Requirements](#server-requirements)
 - [Installing Gimli](#installing-gimli)
 - [Creating a Project](#creating-a-project)
 
 <a class="anchor" id="server-requirements"></a>
-### Server Requirements
+## Server Requirements
 * Go version >= 1.7
 
 <a class="anchor" id="installing-gimli"></a>
-### Installing Gimli
+## Installing Gimli
 You can use `go get` to install the Gimli framework and cli tool:
 
     $ go get github.com/nickbryan/gimli
@@ -30,16 +34,16 @@ Alternately you can `go get` an individual package:
     $ go get github.com/nickbryan/gimli/routing
     
 And import the package as below:
-```go
+{{<highlight go>}}
 package yours
 
 import (
   "github.com/nickbryan/gimli/routing"
 )
-```
+{{</highlight>}}
 
 <a class="anchor" id="creating-a-project"></a>
-### Creating a Project
+## Creating a Project
 Gimli comes with a command line utility for working with the framework. When you `go get` the package the cli tool 
 is installed in the `bin/` directory of your `$GOPATH`.
 

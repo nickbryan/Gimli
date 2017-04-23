@@ -1,8 +1,12 @@
----
-layout: documentation
-title: Project Structure
----
-# Project Structure
++++
+date = "2017-04-02T20:46:58+01:00"
+draft = false
+title = "Project Structure"
+[menu.main]
+  parent = "Getting Started"
+  identifier = "project-structure"
+  weight = 5
++++
 
 - [Introduction](#introduction)
 - [The Skeleton Project](#skeleton-project)

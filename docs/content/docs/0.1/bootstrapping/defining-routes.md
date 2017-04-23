@@ -1,8 +1,12 @@
----
-layout: documentation
-title: Defining Routes
----
-# Defining Routes
++++
+date = "2017-03-21T20:46:58+01:00"
+draft = false 
+title = "Defining Routes"
+[menu.main]
+  parent = "Bootstrapping"
+  identifier = "docs/0.1/bootstrapping/defining-routes"
+  weight = -5
++++
 
 - [Introduction](#introduction)
 - [Basic Routing](#basic-routing)
@@ -19,7 +23,7 @@ most applications will be fine with the following.
 The routing package exposes a helper method for each type of request method, along with other helpers if you need some 
 more control:
 
-```go
+{{<highlight go>}}
 package yours
 
 import (
@@ -44,5 +48,4 @@ func main() {
     router.Any("/any", callback) // Responds to any request method
     router.Match("/match", callback, http.MethodGet, http.MethodDelete) // Only responds to GET and DELETE request methods
 }
-
-```
+{{</highlight>}}
