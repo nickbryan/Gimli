@@ -1,9 +1,9 @@
-baseURL = "https://nickbryan.github.io/gimli"
+baseURL = "https://nickbryan.github.io/gimli/"
 languageCode = "en-gb"
 title = "Gimli"
 pygmentsstyle = "autumn"
 theme = "hugo-material-docs"
-publishDir = "../docs"
+canonifyURLs = true
 
 [params]
 	# General information
