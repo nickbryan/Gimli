@@ -2,59 +2,59 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://nickbryan.github.io/gimli/index/</loc>
+    <loc>https://nickbryan.github.io/index/</loc>
     <lastmod>2017-03-08T21:07:13+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://nickbryan.github.io/gimli/docs/0.1/getting-started/installation/</loc>
+    <loc>https://nickbryan.github.io/docs/0.1/getting-started/installation/</loc>
     <lastmod>2017-04-03T20:46:58+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://nickbryan.github.io/gimli/docs/0.1/getting-started/project-structure/</loc>
+    <loc>https://nickbryan.github.io/docs/0.1/getting-started/project-structure/</loc>
     <lastmod>2017-04-02T20:46:58+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://nickbryan.github.io/gimli/docs/0.1/getting-started/framework-overview/</loc>
+    <loc>https://nickbryan.github.io/docs/0.1/getting-started/framework-overview/</loc>
     <lastmod>2017-04-01T20:46:58+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://nickbryan.github.io/gimli/docs/0.1/bootstrapping/configuration/</loc>
+    <loc>https://nickbryan.github.io/docs/0.1/bootstrapping/configuration/</loc>
     <lastmod>2017-03-22T20:46:58+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://nickbryan.github.io/gimli/docs/0.1/bootstrapping/defining-routes/</loc>
+    <loc>https://nickbryan.github.io/docs/0.1/bootstrapping/defining-routes/</loc>
     <lastmod>2017-03-21T20:46:58+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://nickbryan.github.io/gimli/docs/0.1/dependency-injection/service-container/</loc>
+    <loc>https://nickbryan.github.io/docs/0.1/dependency-injection/service-container/</loc>
     <lastmod>2017-03-20T20:46:58+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://nickbryan.github.io/gimli/categories/</loc>
+    <loc>https://nickbryan.github.io/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://nickbryan.github.io/gimli/docs/</loc>
+    <loc>https://nickbryan.github.io/docs/</loc>
     <lastmod>2017-04-03T20:46:58+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://nickbryan.github.io/gimli/</loc>
+    <loc>https://nickbryan.github.io/</loc>
     <lastmod>2017-03-08T21:07:13+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://nickbryan.github.io/gimli/tags/</loc>
+    <loc>https://nickbryan.github.io/tags/</loc>
     <priority>0</priority>
   </url>
   
