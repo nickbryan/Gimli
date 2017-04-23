@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Docs on Gimli</title>
-    <link>https://nickbryan.github.io/docs/</link>
+    <link>https://nickbryan.github.io/gimli/docs/</link>
     <description>Recent content in Docs on Gimli</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
     <copyright>Released under the MIT license</copyright>
     <lastBuildDate>Mon, 03 Apr 2017 20:46:58 +0100</lastBuildDate>
     
-	<atom:link href="https://nickbryan.github.io/docs/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://nickbryan.github.io/gimli/docs/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Installation</title>
-      <link>https://nickbryan.github.io/docs/0.1/getting-started/installation/</link>
+      <link>https://nickbryan.github.io/gimli/docs/0.1/getting-started/installation/</link>
       <pubDate>Mon, 03 Apr 2017 20:46:58 +0100</pubDate>
       
-      <guid>https://nickbryan.github.io/docs/0.1/getting-started/installation/</guid>
+      <guid>https://nickbryan.github.io/gimli/docs/0.1/getting-started/installation/</guid>
       <description>Server Requirements Installing Gimli Creating a Project  
 Server Requirements  Go version &amp;gt;= 1.7  
 Installing Gimli You can use go get to install the Gimli framework and cli tool:
@@ -28,10 +28,10 @@ $ go get github.com/nickbryan/gimli/routing  And import the package as below: pa
     
     <item>
       <title>Project Structure</title>
-      <link>https://nickbryan.github.io/docs/0.1/getting-started/project-structure/</link>
+      <link>https://nickbryan.github.io/gimli/docs/0.1/getting-started/project-structure/</link>
       <pubDate>Sun, 02 Apr 2017 20:46:58 +0100</pubDate>
       
-      <guid>https://nickbryan.github.io/docs/0.1/getting-started/project-structure/</guid>
+      <guid>https://nickbryan.github.io/gimli/docs/0.1/getting-started/project-structure/</guid>
       <description>Introduction The Skeleton Project  The app Package The bootstrap Package The config Directory The public Directory   
 Introduction Note: Most of this documentation presumes you are working form a new skeleton application.
 Gimli aims to provide a solid foundation for getting started with a new project by providing a skeleton application out of the box. You can read more on creating a new skeleton project in the installation section.</description>
@@ -39,10 +39,10 @@ Gimli aims to provide a solid foundation for getting started with a new project 
     
     <item>
       <title>Framework Overview</title>
-      <link>https://nickbryan.github.io/docs/0.1/getting-started/framework-overview/</link>
+      <link>https://nickbryan.github.io/gimli/docs/0.1/getting-started/framework-overview/</link>
       <pubDate>Sat, 01 Apr 2017 20:46:58 +0100</pubDate>
       
-      <guid>https://nickbryan.github.io/docs/0.1/getting-started/framework-overview/</guid>
+      <guid>https://nickbryan.github.io/gimli/docs/0.1/getting-started/framework-overview/</guid>
       <description>Introduction Application Initialisation Request Lifecycle  
 Introduction It is a good idea to get familiar with whats happening behind the public interface of a framework before you dive into using it. This section of the documentation aims to provide a high level overview of how Gimli was put together and what happens during the lifecycle of a request.
 
@@ -51,10 +51,10 @@ Application Initialisation When you run an application created using gimli new &
     
     <item>
       <title>Configuration</title>
-      <link>https://nickbryan.github.io/docs/0.1/bootstrapping/configuration/</link>
+      <link>https://nickbryan.github.io/gimli/docs/0.1/bootstrapping/configuration/</link>
       <pubDate>Wed, 22 Mar 2017 20:46:58 +0100</pubDate>
       
-      <guid>https://nickbryan.github.io/docs/0.1/bootstrapping/configuration/</guid>
+      <guid>https://nickbryan.github.io/gimli/docs/0.1/bootstrapping/configuration/</guid>
       <description>Introduction  
 Introduction Configuration is currently not fully supported. There are only two variables used from the config at this time which is host and port.
 Please check back later for further updates.</description>
@@ -62,20 +62,20 @@ Please check back later for further updates.</description>
     
     <item>
       <title>Defining Routes</title>
-      <link>https://nickbryan.github.io/docs/0.1/bootstrapping/defining-routes/</link>
+      <link>https://nickbryan.github.io/gimli/docs/0.1/bootstrapping/defining-routes/</link>
       <pubDate>Tue, 21 Mar 2017 20:46:58 +0100</pubDate>
       
-      <guid>https://nickbryan.github.io/docs/0.1/bootstrapping/defining-routes/</guid>
+      <guid>https://nickbryan.github.io/gimli/docs/0.1/bootstrapping/defining-routes/</guid>
       <description>Introduction Basic Routing  
 Introduction Currently, the simplest way to define your application routes is in the bootstrap/routes.go file. There are a number of helper functions that make adding routes to the router a breeze which we will cover soon. The routing package provides other ways of defining routes that give you more control if you need it but most applications will be fine with the following.</description>
     </item>
     
     <item>
       <title>Service Container</title>
-      <link>https://nickbryan.github.io/docs/0.1/dependency-injection/service-container/</link>
+      <link>https://nickbryan.github.io/gimli/docs/0.1/dependency-injection/service-container/</link>
       <pubDate>Mon, 20 Mar 2017 20:46:58 +0100</pubDate>
       
-      <guid>https://nickbryan.github.io/docs/0.1/dependency-injection/service-container/</guid>
+      <guid>https://nickbryan.github.io/gimli/docs/0.1/dependency-injection/service-container/</guid>
       <description>Introduction Service Providers Binding Resolving  
 Introduction Gimli provides a basic service container implementation trough the di package. The container does not aim to be &amp;ldquo;magic&amp;rdquo; and is a simple way to manage object dependencies. You must first bind any values you wish to use in the container:
 package main import . &amp;quot;github.com/nickbryan/gimli/di&amp;quot; func main() { container := NewContainer() container.Bind(&amp;quot;name&amp;quot;, func(container Container) interface{} { return &amp;quot;Nick&amp;quot; }) }  There a few different ways you can bind values in the container which will be covered in the next section.</description>
