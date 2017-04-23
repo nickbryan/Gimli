@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+  
+  
+  
+  
+   <html class="no-js"> 
+
+  <head lang="en-gb">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <title>Project Structure - Gimli</title>
+    <meta name="generator" content="Hugo 0.21-DEV" />
+
+    
+    <meta name="description" content="A web application framework written in GO">
+    
+    <link rel="canonical" href="https://nickbryan.github.io/gimli/docs/0.1/getting-started/project-structure/">
+    
+    <meta name="author" content="Nick Bryan">
+    
+
+    <meta property="og:url" content="https://nickbryan.github.io/gimli/docs/0.1/getting-started/project-structure/">
+    <meta property="og:title" content="Gimli">
+    
+    <meta name="apple-mobile-web-app-title" content="Gimli">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://nickbryan.github.io/gimli/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="https://nickbryan.github.io/gimli/images/favicon.ico">
+
+    <style>
+      @font-face {
+        font-family: 'Icon';
+        src: url('https://nickbryan.github.io/gimli/fonts/icon.eot');
+        src: url('https://nickbryan.github.io/gimli/fonts/icon.eot')
+               format('embedded-opentype'),
+             url('https://nickbryan.github.io/gimli/fonts/icon.woff')
+               format('woff'),
+             url('https://nickbryan.github.io/gimli/fonts/icon.ttf')
+               format('truetype'),
+             url('https://nickbryan.github.io/gimli/fonts/icon.svg')
+               format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <link rel="stylesheet" href="https://nickbryan.github.io/gimli/stylesheets/application.css">
+    <link rel="stylesheet" href="https://nickbryan.github.io/gimli/stylesheets/temporary.css">
+    <link rel="stylesheet" href="https://nickbryan.github.io/gimli/stylesheets/palettes.css">
+    <link rel="stylesheet" href="https://nickbryan.github.io/gimli/stylesheets/highlight/highlight.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,700|Roboto&#43;Mono">
+    <style>
+      body, input {
+        font-family: 'Roboto', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+        font-family: 'Roboto Mono', 'Courier New', 'Courier', monospace;
+      }
+    </style>
+
+    
+    <script src="https://nickbryan.github.io/gimli/javascripts/modernizr.js"></script>
+
+    
+
+  </head>
+  <body class=" ">
+
+
+
+	
+	
+
+
+<div class="backdrop">
+	<div class="backdrop-paper"></div>
+</div>
+
+<input class="toggle" type="checkbox" id="toggle-drawer">
+<input class="toggle" type="checkbox" id="toggle-search">
+<label class="toggle-button overlay" for="toggle-drawer"></label>
+
+<header class="header">
+	<nav aria-label="Header">
+  <div class="bar default">
+    <div class="button button-menu" role="button" aria-label="Menu">
+      <label class="toggle-button icon icon-menu" for="toggle-drawer">
+        <span></span>
+      </label>
+    </div>
+    <div class="stretch">
+      <div class="title">
+        Project Structure
+      </div>
+    </div>
+
+    
+    <div class="button button-twitter" role="button" aria-label="Twitter">
+       <a href="https://twitter.com/iamnickbryan" title="@iamnickbryan on Twitter" target="_blank" class="toggle-button icon icon-twitter"></a>
+    </div>
+    
+
+    
+    <div class="button button-github" role="button" aria-label="GitHub">
+      <a href="https://github.com/nickbryan" title="@nickbryan on GitHub" target="_blank" class="toggle-button icon icon-github"></a>
+    </div>
+    
+    
+        
+  </div>
+  <div class="bar search">
+    <div class="button button-close" role="button" aria-label="Close">
+      <label class="toggle-button icon icon-back" for="toggle-search"></label>
+    </div>
+    <div class="stretch">
+      <div class="field">
+        <input class="query" type="text" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck>
+      </div>
+    </div>
+    <div class="button button-reset" role="button" aria-label="Search">
+      <button class="toggle-button icon icon-close" id="reset-search"></button>
+    </div>
+  </div>
+</nav>
+</header>
+
+<main class="main">
+	<div class="drawer">
+		<nav aria-label="Navigation">
+  <a href="https://github.com/nickbryan/gimli" class="project">
+    <div class="banner">
+      
+      <div class="name">
+        <strong>Gimli <span class="version">0.1.2</span></strong>
+        
+          <br>
+          nickbryan/gimli
+        
+      </div>
+    </div>
+  </a>
+
+  <div class="scrollable">
+    <div class="wrapper">
+      
+        <ul class="repo">
+          <li class="repo-download">
+            <a href="https://github.com/nickbryan/gimli/archive/master.zip" target="_blank" title="Download" data-action="download">
+              <i class="icon icon-download"></i> Download
+            </a>
+          </li>
+          <li class="repo-stars">
+            <a href="https://github.com/nickbryan/gimli/stargazers" target="_blank" title="Stargazers" data-action="star">
+              <i class="icon icon-star"></i> Stars
+              <span class="count">&ndash;</span>
+            </a>
+          </li>
+        </ul>
+        <hr>
+      
+
+      <div class="toc">
+        
+        <ul>
+          
+
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Home" href="/gimli/gimli/">
+	
+	Home
+</a>
+
+
+
+  
+</li>
+
+
+
+<li>
+  
+    <span class="section">Getting Started</span>
+    <ul>
+      
+        
+        
+
+
+
+<a  title="Installation" href="/gimli/gimli/docs/0.1/getting-started/installation/">
+	
+	Installation
+</a>
+
+
+
+      
+        
+        
+
+
+
+<a class="current" title="Project Structure" href="/gimli/gimli/docs/0.1/getting-started/project-structure/">
+	
+	Project Structure
+</a>
+
+
+<ul id="scrollspy">
+</ul>
+
+
+      
+        
+        
+
+
+
+<a  title="Framework Overview" href="/gimli/gimli/docs/0.1/getting-started/framework-overview/">
+	
+	Framework Overview
+</a>
+
+
+
+      
+    </ul>
+  
+</li>
+
+
+
+<li>
+  
+    <span class="section">Bootstrapping</span>
+    <ul>
+      
+        
+        
+
+
+
+<a  title="Configuration" href="/gimli/gimli/docs/0.1/bootstrapping/configuration/">
+	
+	Configuration
+</a>
+
+
+
+      
+        
+        
+
+
+
+<a  title="Defining Routes" href="/gimli/gimli/docs/0.1/bootstrapping/defining-routes/">
+	
+	Defining Routes
+</a>
+
+
+
+      
+    </ul>
+  
+</li>
+
+
+
+<li>
+  
+    <span class="section">Dependency Injection</span>
+    <ul>
+      
+        
+        
+
+
+
+<a  title="Service Container" href="/gimli/gimli/docs/0.1/dependency-injection/service-container/">
+	
+	Service Container
+</a>
+
+
+
+      
+    </ul>
+  
+</li>
+
+
+        </ul>
+        
+
+        
+        <hr>
+        <span class="section">The author</span>
+        
+        <ul>
+          
+          <li>
+            <a href="https://twitter.com/iamnickbryan" target="_blank" title="@iamnickbryan on Twitter">
+              @iamnickbryan on Twitter
+            </a>
+          </li>
+          
+
+          
+          <li>
+            <a href="https://github.com/nickbryan" target="_blank" title="@nickbryan on GitHub">
+              @nickbryan on GitHub
+            </a>
+          </li>
+          
+
+          
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+
+	</div>
+
+	<article class="article">
+		<div class="wrapper">
+			<h1>Project Structure </h1>
+
+			
+
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#skeleton-project">The Skeleton Project</a>
+
+<ul>
+<li><a href="#app-package">The <code>app</code> Package</a></li>
+<li><a href="#bootstrap-package">The <code>bootstrap</code> Package</a></li>
+<li><a href="#config-directory">The <code>config</code> Directory</a></li>
+<li><a href="#public-directory">The <code>public</code> Directory</a></li>
+</ul></li>
+</ul>
+
+<p><a class="anchor" id="introduction"></a></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p><strong><em>Note: Most of this documentation presumes you are working form a new skeleton application.</em></strong></p>
+
+<p>Gimli aims to provide a solid foundation for getting started with a new project by providing a skeleton
+application out of the box. You can <a href="/docs/0.1/installation#creating-a-project">read more on creating a new skeleton project</a>
+in the installation section. This skeleton is just a starting point so feel free to customise it however you like.</p>
+
+<p>Using the skeleton is a nice way to get started but there are times when you will need more flexibility with your project
+structure. Gimli has tried to keep this in mind by taking a modular approach to framework design, splitting each component
+into a self contained package. So you can build your own project skeleton using only the packages that you need.</p>
+
+<p>The foundation package is the heart of the framework and responsible for tying all of the other Gimli components together.
+All of the other packages aim to be self contained and do not require any other parts of the framework to function.</p>
+
+<p><a class="anchor" id="skeleton-project"></a></p>
+
+<h2 id="the-skeleton-project">The Skeleton Project</h2>
+
+<p>The default skeleton project structure looks like this:</p>
+
+<pre><code>foundation/skeleton
+├── app
+│   ├── controllers
+│   │   └── welcome.go
+│   ├── printer.go
+│   └── providers
+│       └── controller.go
+├── bootstrap
+│   ├── bootstrap.go
+│   ├── providers.go
+│   └── routes.go
+├── config
+│   └── app.json
+├── main.go
+└── public
+    ├── css
+    ├── favicon.ico
+    ├── img
+    ├── js
+    └── robots.txt
+</code></pre>
+
+<p>The projects main package consists of a single <code>main.go</code> file which includes the <code>bootstrap</code> package and runs the application.</p>
+
+<p><a class="anchor" id="app-package"></a></p>
+
+<h3 id="the-app-package">The App Package</h3>
+
+<p>The <code>app</code> package is where the main application code lives. You can split this up as you see fit but some default
+sub-packages have been created as a starting point.</p>
+
+<p><a class="anchor" id="bootstrap-package"></a></p>
+
+<h3 id="the-bootstrap-package">The Bootstrap Package</h3>
+
+<p>The bootstrap package is where all application bootstrapping should take place.</p>
+
+<p>The file <code>bootstrap.go</code> is responsible for pulling in the <code>github.co/nickbryan/gimli/foundation</code> package and initialising
+the application. This will create the container instance and register the default service providers.</p>
+
+<p>The <code>providers.go</code> file has been created to provide a convenient place to register custom service providers with the
+container. This should be done in the <code>init()</code> function so that they are registered before <code>main.go</code> calls <code>Application.Run()</code>.</p>
+
+<p>Similarly to <code>providers.go</code>, a <code>routes.go</code> file is created as a convenient place to register all route callbacks for the
+application. Again, this should be done in the <code>init()</code> function.</p>
+
+<p><a class="anchor" id="config-directory"></a></p>
+
+<h3 id="the-config-directory">The Config Directory</h3>
+
+<p>Currently Gimli only supports <code>.json</code> files as a configuration format.</p>
+
+<p>When Gimli is booted a <code>github.com/nickbryan/gimli/config.Repository</code> is loaded into the container and all <code>.json</code> files
+are loaded from the <code>config</code> directory.</p>
+
+<p>You can <a href="/docs/0.1/configuration">read more about configuration</a> in the Bootstrapping section of the documentation.</p>
+
+<p><a class="anchor" id="public-directory"></a></p>
+
+<h3 id="the-public-directory">The Public Directory</h3>
+
+<p>The <code>public</code> directory is where all application assets should be stored and has been broken down into a common structure.
+The router will look in here by default for all static files.</p>
+
+
+			<aside class="copyright" role="note">
+				
+				&copy; 2017 Released under the MIT license &ndash;
+				
+				Documentation built with
+				<a href="https://www.gohugo.io" target="_blank">Hugo</a>
+				using the
+				<a href="http://github.com/digitalcraftsman/hugo-material-docs" target="_blank">Material</a> theme.
+			</aside>
+
+			<footer class="footer">
+				
+
+<nav class="pagination" aria-label="Footer">
+  <div class="previous">
+  
+      <a href="https://nickbryan.github.io/gimli/docs/0.1/getting-started/installation/" title="Installation">
+        <span class="direction">
+          Previous
+        </span>
+        <div class="page">
+          <div class="button button-previous" role="button" aria-label="Previous">
+            <i class="icon icon-back"></i>
+          </div>
+          <div class="stretch">
+            <div class="title">
+              Installation
+            </div>
+          </div>
+        </div>
+      </a>
+  
+  </div>
+
+  <div class="next">
+  
+      <a href="https://nickbryan.github.io/gimli/docs/0.1/getting-started/framework-overview/" title="Framework Overview">
+        <span class="direction">
+          Next
+        </span>
+        <div class="page">
+          <div class="stretch">
+            <div class="title">
+              Framework Overview
+            </div>
+          </div>
+          <div class="button button-next" role="button" aria-label="Next">
+            <i class="icon icon-forward"></i>
+          </div>
+        </div>
+      </a>
+  
+  </div>
+</nav>
+
+
+			</footer>
+		</div>
+	</article>
+
+	<div class="results" role="status" aria-live="polite">
+		<div class="scrollable">
+			<div class="wrapper">
+				<div class="meta"></div>
+				<div class="list"></div>
+			</div>
+		</div>
+	</div>
+</main>
+
+    <script>
+    
+      var base_url = 'https:\/\/nickbryan.github.io\/gimli';
+      var repo_id  = 'nickbryan\/gimli';
+    
+    </script>
+
+    <script src="https://nickbryan.github.io/gimli/javascripts/application.js"></script>
+    
+
+    <script>
+      /* Add headers to scrollspy */
+      var headers   = document.getElementsByTagName("h2");
+      var scrollspy = document.getElementById('scrollspy');
+
+      if(scrollspy) {
+        if(headers.length > 0) {
+          for(var i = 0; i < headers.length; i++) {
+            var li = document.createElement("li");
+            li.setAttribute("class", "anchor");
+
+            var a  = document.createElement("a");
+            a.setAttribute("href", "#" + headers[i].id);
+            a.setAttribute("title", headers[i].innerHTML);
+            a.innerHTML = headers[i].innerHTML;
+
+            li.appendChild(a)
+            scrollspy.appendChild(li);
+          }
+        } else {
+          scrollspy.parentElement.removeChild(scrollspy)
+        }
+
+
+        /* Add permanent link next to the headers */
+        var headers = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+
+        for(var i = 0; i < headers.length; i++) {
+            var a = document.createElement("a");
+            a.setAttribute("class", "headerlink");
+            a.setAttribute("href", "#" + headers[i].id);
+            a.setAttribute("title", "Permanent link")
+            a.innerHTML = "¶";
+            headers[i].appendChild(a);
+        }
+      }
+    </script>
+
+    
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
