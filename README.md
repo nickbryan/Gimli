@@ -2,6 +2,9 @@
 
 [![Build Status](https://travis-ci.org/nickbryan/gimli.svg?branch=master)](https://travis-ci.org/nickbryan/gimli)
 [![Coverage Status](https://coveralls.io/repos/github/nickbryan/gimli/badge.svg?branch=master)](https://coveralls.io/github/nickbryan/gimli?branch=master)
+[![GoDoc](https://godoc.org/github.com/nickbryan/gimli?status.svg)](https://godoc.org/github.com/nickbryan/gimli)
+[![Go Report Card](https://goreportcard.com/badge/github.com/nickbryan/gimli)](https://goreportcard.com/report/github.com/nickbryan/gimli)
+[![Docs](https://img.shields.io/badge/Docs-v0.1-blue.svg)](https://nickbryan.github.io/gimli)
 
 Gimli is a web application framework for the Go language. It aims to be simple and clean, 
 taking inspiration from web frameworks across many languages. 
