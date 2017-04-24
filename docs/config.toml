@@ -1,0 +1,41 @@
+baseURL = "https://nickbryan.github.io/gimli/"
+languageCode = "en-gb"
+title = "Gimli"
+pygmentsstyle = "autumn"
+theme = "hugo-material-docs"
+
+[params]
+	# General information
+	author = "Nick Bryan"
+	description = "A web application framework written in GO"
+	copyright = "Released under the MIT license"
+
+
+	# Repository
+	provider = "GitHub"
+	repo_url = "https://github.com/nickbryan/gimli"
+	repo_id = "gimli"
+
+	version = "0.1.2"
+
+[social]
+	github  = "nickbryan"
+	twitter = "iamnickbryan"
+
+[[menu.main]]
+	name   = "Home"
+	url    = "/"
+    weight = -20
+[[menu.main]]
+	name   = "Getting Started"
+	url    = "/docs/0.1/getting-started/"
+    weight = -10
+[[menu.main]]
+	name   = "Bootstrapping"
+	url    = "/docs/0.1/bootstrapping/"
+    weight = -5
+[[menu.main]]
+	name   = "Dependency Injection"
+	url    = "/docs/0.1/dependency-injection/"
+	weight = 5
+	

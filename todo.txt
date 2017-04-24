@@ -3,8 +3,13 @@ General
 * Improve api documentation and check against go doc.
 * Add doc.go for each package.
 
+Foundation
+* Add helpers for container etc.
+
 Skeleton
 * Make a nicer example.
+* Helpers were not working before as the container was being used (via init()) before
+it was instantiated.
 
 Commands
 * Consider switching to cobra.
