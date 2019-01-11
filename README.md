@@ -1,3 +1,8 @@
+
+## This project is no longer under development
+**I have come to realise how much of a bad idea this was; trying to build a framework that mimicked what I was used to in PHP. Nevertheless, this was a good learning excercies and TDDing the router was good fun.**
+
+
 # Gimli - A Go Web Application Framework
 
 [![Build Status](https://travis-ci.org/nickbryan/gimli.svg?branch=master)](https://travis-ci.org/nickbryan/gimli)
